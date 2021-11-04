@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 public class Menu {
 	
+	//HAHAHAHAHAHAHAHAHAH RONALDINHO SOCCER
+	
 	Scanner input = new Scanner(System.in);
 	
 	String nome;
