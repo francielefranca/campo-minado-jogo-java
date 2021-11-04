@@ -10,7 +10,7 @@ public class Menu {
 	int nivel;
 
 	public static void main(String[] args) {
-		int opcao = 1;	
+		int opcao = 3;	
 
 		System.out.println("Digite o seu nome:"); //recebendo o nome do jogador
 		//nome = input.nextLine();

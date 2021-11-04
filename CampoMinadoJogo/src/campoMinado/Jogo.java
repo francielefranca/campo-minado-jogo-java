@@ -7,9 +7,7 @@ public class Jogo {
 	boolean clicouCelulaVazia;
 	boolean clicouBomba;
 	boolean clicouNumero;
-	
-	//tempo?
-	
+		
 	if(clicouNumero == true) {
 		pontuacao = pontuacao + 10;
 	}
