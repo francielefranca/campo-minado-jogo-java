@@ -23,7 +23,7 @@ public class Menu {
 		
 		switch(opcao) {
 		case '1':
-			System.out.println("Jogar");
+			new Celula();
 			break;
 		case '2':
 			dificuldadesDoJogo();
