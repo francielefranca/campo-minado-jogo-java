@@ -19,7 +19,7 @@ public class Celula {
 	
 	public void sortearMinas() {
 		int aleatorio = random.nextInt(8);
-		if (aleatorio == 0 || aleatorio == 2) {
+		if (aleatorio == 0 || aleatorio == 1) {
 			numero = 0;
 		} else {
 			numero = 7;
