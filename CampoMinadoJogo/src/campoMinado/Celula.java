@@ -15,6 +15,8 @@ public class Celula {
 	
 	int quantidadeDeBombas = 0;
 	
+	int quantidadeDeBandeiras = 10;
+	
 	int pontos = 0;
 	
 	public void sortearMinas() {
