@@ -20,10 +20,11 @@ public class Menu {
 		char opcao;
 		System.out.print("\nO que você deseja acessar?\n" + "1 - Iniciar jogo\n" + "2 - Seleção de dificuldades\n" + "3 - Regras do Campo Minado\n");
 		opcao = input.next().charAt(0);
+		System.out.println("");
 		
 		switch(opcao) {
 		case '1':
-			new Celula();
+			new Jogo();
 			break;
 		case '2':
 			dificuldadesDoJogo();
