@@ -84,7 +84,8 @@ public class Jogo {
 			System.out.println("");
 		}
 		System.out.println("");
-		System.out.print("Havia uma mina, você perdeu.");
+		System.out.println("Havia uma mina, você perdeu.");
+		System.out.println("Pontuação total: " + tabuleiro.pontos);
 	}
 	
 	public void jogabilidade() {
