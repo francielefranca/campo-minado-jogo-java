@@ -22,7 +22,8 @@ public class Tabuleiro extends Celula {
         
 		System.out.println("");
 		System.out.println("Bombas: " + quantidadeDeBombas);
-		System.out.print("Pontos: " + pontos);
+		System.out.println("Pontos: " + pontos);
+		System.out.println("Bandeiras : " + quantidadeDeBandeiras);
 		System.out.println("");
 	}
 	
@@ -40,7 +41,8 @@ public class Tabuleiro extends Celula {
         
 		System.out.println("");
 		System.out.println("Bombas: " + quantidadeDeBombas);
-		System.out.print("Pontos: " + pontos);
+		System.out.println("Pontos: " + pontos);
+		System.out.println("Bandeiras : " + quantidadeDeBandeiras);
 		System.out.println("");
 	}
 	
