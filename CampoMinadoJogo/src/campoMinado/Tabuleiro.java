@@ -2,8 +2,6 @@ package campoMinado;
 
 public class Tabuleiro extends Celula {
 	
-	char[][] tabuleiro;
-	
 	public void imprimirTabuleiro() {
 		
 		tabuleiro = new char[9][9];
@@ -47,8 +45,8 @@ public class Tabuleiro extends Celula {
 	}
 	
 	public Tabuleiro() {
-		sortearMinas();
 		imprimirMinas();
+		//gerarCasasVizinhas();
 		imprimirTabuleiro();
 	}
 }
