@@ -10,6 +10,7 @@ public class Celula {
 	int coluna;
 	
 	int[][] celulas;
+	char[][] tabuleiro;
 	
 	int numero;
 	
@@ -18,6 +19,27 @@ public class Celula {
 	int quantidadeDeBandeiras = 10;
 	
 	int pontos = 0;
+	
+	public void gerarCasasVizinhas() {
+        for (int linha = 0; linha < 8 ; linha++) {
+        	for (int coluna = 0;  coluna < 8; coluna++){
+        		for (int i = 0; i <= 1; i++) {
+        			for (int j = 0; j <= 1; j++) {
+        				if (celulas[linha][coluna] != 0) {
+        					if(celulas[linha + i][coluna + j] == 0) {
+        						celulas[linha][coluna]++;
+        						}
+        					}
+        			}                
+        		}
+        	}            
+        }
+    }
+	
+	public void abrirVizinhas() {
+		
+    }
+
 	
 	public void sortearMinas() {
 		int aleatorio = random.nextInt(8);
