@@ -46,7 +46,6 @@ public class Tabuleiro extends Celula {
 	
 	public Tabuleiro() {
 		imprimirMinas();
-		//gerarCasasVizinhas();
 		imprimirTabuleiro();
 	}
 }
