@@ -6,15 +6,48 @@ public class Jogo {
 	
 	Scanner input = new Scanner(System.in);
 	
-	int x, y;
+	int w, y;
+	int x;
+	
 	char acao;
+	int bombasVizinhas;
 	
 	boolean gameOver;
 	
 	Tabuleiro tabuleiro = new Tabuleiro();
 	
+	public void conferirVizinhas() {
+		bombasVizinhas = 0;
+		
+		if ((x - 1) > 0 && tabuleiro.celulas[x - 1][y] == 0) {
+			++bombasVizinhas;
+			}
+		if ((x + 1) < 9 && tabuleiro.celulas[x + 1][y] == 0) {
+			++bombasVizinhas;
+			} 
+		if ((y + 1) < 9 && tabuleiro.celulas[x][y + 1] == 0) {
+			++bombasVizinhas;
+			} 
+		if ((y - 1) > 0 && tabuleiro.celulas[x][y - 1] == 0) {
+			++bombasVizinhas;
+			} 
+		if (((x + 1) < 9 && (y + 1) < 9) && tabuleiro.celulas[x + 1][y + 1] == 0) {
+			++bombasVizinhas;
+			} 
+		if (((x - 1) > 0 && (y - 1) > 0) && tabuleiro.celulas[x - 1][y - 1] == 0) {
+			++bombasVizinhas;
+			}
+		if (((x + 1) < 9 && (y - 1) > 0) && tabuleiro.celulas[x + 1][y - 1] == 0) {
+			++bombasVizinhas;
+			}
+		if (((x - 1) > 0 && (y + 1) < 9) && tabuleiro.celulas[x - 1][y + 1] == 0) {
+			++bombasVizinhas;
+			}
+		tabuleiro.tabuleiro[x][y] = Character.forDigit(bombasVizinhas, 10);
+    }
+	
 	public void pontuacao() {
-		if (tabuleiro.tabuleiro[(-(x - 9))][y] == 'A') {
+		if (tabuleiro.celulas[x][y] == 1) {
 			tabuleiro.pontos = tabuleiro.pontos + 100;
 		}
 	}
@@ -24,10 +57,10 @@ public class Jogo {
 	}
 	
 	public void abrirCasa() {
-		if (tabuleiro.tabuleiro[(-(x - 9))][y] == 'B') {
+		if (tabuleiro.tabuleiro[x][y] == 'B') {
 			System.out.println("Casa ocupada por bandeira!\n");
 		} else {
-			tabuleiro.tabuleiro[(-(x - 9))][y] = 'A';
+			conferirVizinhas();
 			pontuacao();
 			tabuleiro.marcarTabuleiro();
 			System.out.println("");
@@ -35,37 +68,37 @@ public class Jogo {
 	}
 	
 	public void casa() {
-		if (tabuleiro.tabuleiro[(-(x - 9))][y] == 'A') {
+		if (tabuleiro.tabuleiro[(x)][y] != '-') {
 			casaAberta();
 		} else { 
-			if (tabuleiro.celulas[(-(x - 9))][y] == 7) {
+			if (tabuleiro.celulas[(x)][y] == 1) {
 				abrirCasa();
 			}
 		}
 	}
 	
 	public void contadorDeBandeiras() {
-		if (tabuleiro.tabuleiro[(-(x - 9))][y] == 'B') {
+		if (tabuleiro.tabuleiro[x][y] == 'B') {
 			--tabuleiro.quantidadeDeBandeiras;
 			}
 	}
 	
 	public void plantarBandeira() {
-		tabuleiro.tabuleiro[(-(x - 9))][y] = 'B';
+		tabuleiro.tabuleiro[x][y] = 'B';
 		contadorDeBandeiras();
 		tabuleiro.marcarTabuleiro();
 		System.out.println("");
 	}
 	
 	public void removerBandeira() {
-		tabuleiro.tabuleiro[(-(x - 9))][y] = '-';
+		tabuleiro.tabuleiro[x][y] = '-';
 		++tabuleiro.quantidadeDeBandeiras;
 		tabuleiro.marcarTabuleiro();
 		System.out.println("");
 	}
 	
 	public void bandeira() {
-		if (tabuleiro.tabuleiro[(-(x - 9))][y] != 'B') {
+		if (tabuleiro.tabuleiro[x][y] != 'B') {
 			plantarBandeira();
 		} else {
 			removerBandeira();
@@ -91,7 +124,8 @@ public class Jogo {
 	
 	public void receberCoordenadas() {
 		System.out.print("Insira sua linha: ");
-		x = input.nextInt();
+		w = input.nextInt();
+		x = (-(w - 9));
 		
 		System.out.print("Insira sua coluna: ");
 		y = input.nextInt();
@@ -125,7 +159,7 @@ public class Jogo {
 		do {
 			receberCoordenadas();
 			acoes();
-			if (tabuleiro.celulas[(-(x - 9))][y] == 0) {
+			if (tabuleiro.celulas[x][y] == 0) {
 				gameOver = true;
 				fimDeJogo();
 				}
