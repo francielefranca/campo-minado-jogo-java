@@ -18,7 +18,7 @@ public class Menu {
 	private void opcoesDoMenu() {
 		
 		char opcao;
-		System.out.print("\nO que você deseja acessar?\n" + "1 - Iniciar jogo\n" + "2 - Seleção de dificuldades\n" + "3 - Regras do Campo Minado\n");
+		System.out.print("\nO que você deseja acessar?\n" + "1 - Iniciar jogo\n" + "2 - Seleção de dificuldade\n" + "3 - Regras do Campo Minado\n");
 		opcao = input.next().charAt(0);
 		System.out.println("");
 		
@@ -39,7 +39,7 @@ public class Menu {
 	}
 	
 	private void regrasDoJogo() {
-		System.out.print("O jogo consiste em limpar as áreas do tabuleiro sem explodir as minas que estão distribuídas aleatoriamente pelo mesmo. Logo, o jogador deve escolher a coordenada(linha, coluna) de onde deseja revelar/marcar, por exemplo: 2 e 5 (linha 2, coluna 5). Se\nna casa 2 e 5 houver uma mina, GAME OVER!\n");
+		System.out.print("O jogo consiste em limpar as áreas do tabuleiro sem explodir as minas que estão distribuídas aleatoriamente pelo mesmo. Logo, o jogador deve escolher a coordenada(linha, coluna) de onde deseja revelar, por exemplo: 2 e 5 (linha 2, coluna 5). Se\nna casa 2 e 5 houver uma mina, GAME OVER!\n");
 		
 		opcoesDoMenu();
 	}

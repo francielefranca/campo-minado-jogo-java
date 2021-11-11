@@ -11,7 +11,7 @@ public class InteracaoComJogador {
 	char acao;
 	
 	public void acoes() {
-		System.out.println("Você quer:\nAbrir casa (A)\nPlantar uma bandeira (B)");
+		System.out.println("Você quer:\nAbrir casa (A)\nColocar uma bandeira (B)");
 		acao = input.next().charAt(0);
 		if (acao == 'a' || acao == 'A') {
 			jogo.casa();
@@ -37,4 +37,6 @@ public class InteracaoComJogador {
 		input.close();
 	}*/
 	
+	
+	//teste
 }

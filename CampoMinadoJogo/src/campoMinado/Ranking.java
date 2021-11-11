@@ -21,7 +21,7 @@ public class Ranking  {
 	static int[] niveisDosJogadores = new int[10];
 	static float[] tempoDosJogadores = new float[10];
 	
-	public Ranking(int pontosTotais){//para receber a pontuacao, nome e nivel do jogador
+	public Ranking(int pontosTotais){//para receber o nome, pontuacao e nivel do jogador
 		this.pontuacao = pontosTotais;
 	}
 	

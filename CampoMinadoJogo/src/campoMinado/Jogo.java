@@ -132,7 +132,7 @@ public class Jogo {
 	}
 	
 	public void acoes() {//nao eh o ideal ficar aqui, se possivel em interacao com o usuario
-		System.out.println("Você quer:\nAbrir casa (A)\nPlantar uma bandeira (B)");
+		System.out.println("Você quer:\nAbrir casa (A)\nColocar uma bandeira (B)");
 		acao = input.next().charAt(0);
 		if (acao == 'a' || acao == 'A') {
 			casa();
@@ -180,7 +180,7 @@ public class Jogo {
 	
 	public void jogabilidade() {
 		do {
-			//interacaoComJogador.receberCoordenadas();
+			//interacaoComJogador.receberCoordenadas(); - teste com a classe de interacao com o usuario
 			//interacaoComJogador.acoes();
 			receberCoordenadas();
 			acoes();
