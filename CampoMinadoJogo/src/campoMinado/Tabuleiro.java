@@ -48,4 +48,8 @@ public class Tabuleiro extends Celula {
 		imprimirMinas();
 		imprimirTabuleiro();
 	}
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> refs/remotes/origin/main

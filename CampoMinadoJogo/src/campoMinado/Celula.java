@@ -51,4 +51,8 @@ public class Celula {
 			}
 		}
 	}
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> refs/remotes/origin/main
