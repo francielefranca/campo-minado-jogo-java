@@ -175,7 +175,7 @@ public class Jogo {
 		System.out.println("");
 		System.out.println("Havia uma mina, você perdeu.");//adicionar mensagem para quando vencer tambem
 		System.out.println("Pontuação total: " + tabuleiro.pontos);
-		int pontosTotais = tabuleiro.pontos;
+		int pontosTotais = tabuleiro.pontos; //pontuacao para o ranking
 	}
 	
 	public void jogabilidade() {

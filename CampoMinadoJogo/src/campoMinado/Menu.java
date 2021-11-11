@@ -39,7 +39,7 @@ public class Menu {
 	}
 	
 	private void regrasDoJogo() {
-		System.out.print("O jogo consiste em limpar as áreas do tabuleiro sem explodir as minas que estão distribuídas aleatoriamente pelo mesmo. Logo, o jogador deve escolher a coordenada(linha, coluna) de onde deseja cavar, por exemplo: 2 e 5 (linha 2, coluna 5). Se\nna casa 2 e 5 houver uma mina, GAME OVER!\n");
+		System.out.print("O jogo consiste em limpar as áreas do tabuleiro sem explodir as minas que estão distribuídas aleatoriamente pelo mesmo. Logo, o jogador deve escolher a coordenada(linha, coluna) de onde deseja revelar/marcar, por exemplo: 2 e 5 (linha 2, coluna 5). Se\nna casa 2 e 5 houver uma mina, GAME OVER!\n");
 		
 		opcoesDoMenu();
 	}
