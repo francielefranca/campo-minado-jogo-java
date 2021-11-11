@@ -1,13 +1,6 @@
 package campoMinado;
 
 public class CampoMinado {
-	public static void main(String[] args) {
-<<<<<<< HEAD
-				
+	public static void main(String[] args) {			
 		new Menu();
-		
-=======
-		new Menu();
->>>>>>> refs/remotes/origin/main
-	}
 }
