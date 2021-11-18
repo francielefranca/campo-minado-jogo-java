@@ -10,7 +10,6 @@ public class Celula {
 	int coluna;
 	
 	int[][] celulas;
-	char[][] tabuleiro;
 	
 	int numero;
 	
@@ -51,5 +50,8 @@ public class Celula {
 			}
 		}
 	}
-
+	
+	public Celula() {
+		imprimirMinas();
+	}
 }
