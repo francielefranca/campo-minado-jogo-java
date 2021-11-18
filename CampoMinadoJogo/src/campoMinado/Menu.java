@@ -1,56 +1,44 @@
 package campoMinado;
 
-import java.util.Scanner;
-
-public class Menu {
+public class Menu extends InteracaoComUsuario {
 	
-	Scanner input = new Scanner(System.in);
-	String nome;
-	char nivel;
-
 	public Menu() {
 		
 		System.out.print("Digite o seu nome: ");
-		nome = input.nextLine();
+		setNome();
 		opcoesDoMenu();
 	}
 	
 	private void opcoesDoMenu() {
 		
-		char opcao;
 		System.out.print("\nO que você deseja acessar?\n" + "1 - Iniciar jogo\n" + "2 - Seleção de dificuldade\n" + "3 - Regras do Campo Minado\n");
-		opcao = input.next().charAt(0);
+		setOpcao();
 		System.out.println("");
 		
-		switch(opcao) {
-		case '1':
+		switch(getOpcao()) {
+		
+		case 1:
 			new Jogo();
 			break;
-		case '2':
+		case 2:
 			dificuldadesDoJogo();
 			break;
-		case '3':
+		case 3:
 			regrasDoJogo();
 			break;
 		default: opcoesDoMenu();
-		}
 		
-		input.close();
+		}
 	}
 	
 	private void regrasDoJogo() {
-		System.out.print("O jogo consiste em limpar as áreas do tabuleiro sem explodir as minas que estão distribuídas aleatóriamente pelo mesmo. Logo, jogador deve escolher a coordenada(linha, coluna) de onde deseja revelar ou marcar com uma banderia, por exemplo: 2 e 5 (linha 2, coluna 5). Se\nna casa 2 e 5 houver uma mina, GAME OVER!\n");
-		
+		System.out.println("O jogo consiste em limpar as áreas do tabuleiro sem explodir as minas que estão distribuídas aleatóriamente pelo mesmo. Logo, jogador deve escolher a coordenada(linha, coluna) de onde deseja revelar ou marcar com uma banderia, por exemplo: 2 e 5 (linha 2, coluna 5). Se\nna casa 2 e 5 houver uma mina, GAME OVER!\n");
 		opcoesDoMenu();
 	}
 	
 	private void dificuldadesDoJogo() {
 		System.out.print("Escolha a dificuldade do jogo:\n1 - Fácil\n2 - Médio\n3 - Difícil\n");
-		nivel = input.next().charAt(0);
-		if (nivel == '1' || nivel == '2' || nivel == '3') {
-			opcoesDoMenu();
-		} else {
-			dificuldadesDoJogo();
-		}
+		setDificuldade();
+		opcoesDoMenu();
 	}
 }
