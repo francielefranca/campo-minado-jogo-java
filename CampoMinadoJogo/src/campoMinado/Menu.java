@@ -1,5 +1,7 @@
 package campoMinado;
 
+import jogador.InteracaoComUsuario;
+
 public class Menu extends InteracaoComUsuario {
 	
 	public Menu() {
