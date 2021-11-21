@@ -60,7 +60,7 @@ public class Jogo extends InteracaoComUsuario {
 			conferirGameOver();
 			pontuacao();
 			conferirVizinhas();
-			tabuleiro.marcarTabuleiro();
+			tabuleiro.marcarTabuleiro(gameOver);
 			System.out.println("");
 		}
 	}
@@ -84,14 +84,14 @@ public class Jogo extends InteracaoComUsuario {
 	public void plantarBandeira() {
 		tabuleiro.casas.celulas[this.x][this.y] = 8;
 		contadorDeBandeiras();
-		tabuleiro.marcarTabuleiro();
+		tabuleiro.marcarTabuleiro(gameOver);
 		System.out.println("");
 	}
 	
 	public void removerBandeira() {
 		tabuleiro.casas.celulas[this.x][this.y] = 9;
 		contadorDeBandeiras();
-		tabuleiro.marcarTabuleiro();
+		tabuleiro.marcarTabuleiro(gameOver);
 		System.out.println("");
 	}
 	
