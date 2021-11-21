@@ -1,4 +1,4 @@
-package campoMinado;
+package jogador;
 
 //import java.util.Arrays;
 import java.io.File;
