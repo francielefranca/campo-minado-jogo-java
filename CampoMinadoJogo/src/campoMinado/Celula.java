@@ -20,38 +20,25 @@ public class Celula {
 	int pontos = 0;
 	
 	public void sortearMinas() {
-		int aleatorio = random.nextInt(8);
-		if (aleatorio == 0 || aleatorio == 1) {
-			numero = 0;
-		} else {
-			numero = 1;
-			}
+		do {
+			int x = random.nextInt(8) + 1;
+			int y = random.nextInt(8) + 1;
+			this.celulas[x][y] = 1;
+			this.quantidadeDeBombas++;
+		} while (this.quantidadeDeBombas < 10);
+		
 	}
 	
-	public void contadorDeBombas() {
-		if (numero == 0) {
-			++quantidadeDeBombas;
-			} 
-	}
-	
-	public void imprimirMinas() {
-		
-		celulas = new int[9][9];
-		
-		for (linha = 1; linha < 9; linha++) {
-			for (coluna = 1; coluna < 9; coluna++) {
-				if(quantidadeDeBombas < 10) {
-					sortearMinas();
-					contadorDeBombas();
-				} else {
-					numero = 1;
+	public void definirCelulas() {
+		celulas = new int[10][10];
+			for (this.linha = 1; this.linha < 9; this.linha++) {
+				for (this.coluna = 1; this.coluna < 9; this.coluna++) {
 				}
-				celulas[linha][coluna] = numero;
 			}
-		}
+			sortearMinas();
 	}
 	
 	public Celula() {
-		imprimirMinas();
+		definirCelulas();
 	}
 }
