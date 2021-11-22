@@ -37,18 +37,7 @@ public class Ranking  {
 	}
 
 	public static void rankingOrdem() {
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < i; j++) {//ou for(int j = 0; j < 11; j++)
-				if(pontuacaoDosJogadores[i]>pontuacaoDosJogadores[j]) {
-					int ordem = pontuacaoDosJogadores[i];
-					pontuacaoDosJogadores[i] = pontuacaoDosJogadores [j];
-					pontuacaoDosJogadores[j] = ordem;
-					ordem = niveisDosJogadores[i];
-					niveisDosJogadores[i] = niveisDosJogadores [j];
-					niveisDosJogadores[j] = ordem;
-				}
-			}
-		}
+		
 	}
 
 	public static void imprimirRanking() {
@@ -84,8 +73,6 @@ public class Ranking  {
 	}
 
 	public static void salvarRanking() {
-		for(int i=0; i<10; i++) {
-
-		}
+		
 	}
 }
