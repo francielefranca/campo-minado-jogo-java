@@ -109,7 +109,7 @@ public class Jogo extends InteracaoComUsuario {
 	}
 	
 	public void acoes() {
-		System.out.println("Você quer:\nAbrir casa (A)\nPlantar uma bandeira (B)");
+		System.out.println("Voce quer:\nAbrir casa (A)\nPlantar uma bandeira (B)");
 		setAcao();
 		if (getAcao() == 'a' || getAcao() == 'A') {
 			casa();
@@ -144,8 +144,8 @@ public class Jogo extends InteracaoComUsuario {
 		}
 		
 		System.out.println("");
-		System.out.println("Havia uma mina, você perdeu.");
-		System.out.println("Pontuação total: " + tabuleiro.casas.pontos);
+		System.out.println("Havia uma mina, voce perdeu.");
+		System.out.println("Pontuacao total: " + tabuleiro.casas.pontos);
 	}
 	
 	public void jogo() {
