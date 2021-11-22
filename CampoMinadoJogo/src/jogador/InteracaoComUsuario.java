@@ -5,10 +5,10 @@ public class InteracaoComUsuario {
 	
 	private int linha;
 	private int coluna;
-	private String nomeDoJogador;
 	private char dificuldade;
 	private char opcoes;
 	private char acaoNoJogo;
+	private String nomeDoJogador;
 	
 	Scanner input = new Scanner(System.in);
 	
