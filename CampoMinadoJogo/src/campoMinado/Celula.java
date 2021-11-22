@@ -19,15 +19,25 @@ public class Celula {
 	
 	int pontos = 0;
 	
+	boolean sorteio;
+	
 	public void sortearMinas() {
-		do {
-			int x = random.nextInt(8) + 1;
-			int y = random.nextInt(8) + 1;
+		int x, y;
+		for(int i = 1; i <= this.quantidadeDeBombas; i++) {
+			do {;
+				x = random.nextInt(8) + 1;
+				y = random.nextInt(8) + 1;
+				if(this.celulas[x][y] == 1) {
+					sorteio = true;
+				} else {
+					sorteio = false;
+				}
+			} while (sorteio);
+			
 			this.celulas[x][y] = 1;
-			this.quantidadeDeBombas++;
-		} while (this.quantidadeDeBombas < 10);
-		
+		} 		
 	}
+	
 	
 	public void definirCelulas() {
 		celulas = new int[10][10];
