@@ -38,7 +38,7 @@ public class InteracaoComUsuario {
 	}
 	
 	public String getNome() {
-		return nomeDoJogador;
+		return this.nomeDoJogador;
 	}
 	
 	public void setOpcao() {
