@@ -5,16 +5,15 @@ public class InteracaoComUsuario {
 	
 	private int linha;
 	private int coluna;
-	private char dificuldade;
+	private String nomeDoJogador;
 	private char opcoes;
 	private char acaoNoJogo;
-	private String nomeDoJogador;
 	
 	Scanner input = new Scanner(System.in);
 	
-	public void setLinha() {
+	protected void setLinha() {
 		this.linha = input.nextInt();
-		if (this.linha > 8 || this.linha < 1) {
+		if (linha > 9 || linha < 1) {
 			setLinha();
 		}
 	}
@@ -23,9 +22,9 @@ public class InteracaoComUsuario {
 		return this.linha;
 	}
 	
-	public void setColuna() {
+	protected void setColuna() {
 		this.coluna = input.nextInt();
-		if (this.coluna > 8 || this.coluna < 1) {
+		if (this.coluna > 9 || this.coluna < 1) {
 			setColuna();
 		}
 	}
@@ -34,28 +33,17 @@ public class InteracaoComUsuario {
 		return this.coluna;
 	}
 	
-	public void setNome() {
-		nomeDoJogador = input.next();
+	protected void setNome() {
+		this.nomeDoJogador = input.next();
 	}
 	
 	public String getNome() {
 		return nomeDoJogador;
 	}
 	
-	public void setDificuldade() {
-		this.dificuldade = input.next().charAt(0);
-		if (this.dificuldade != '1' & this.dificuldade != '2' & this.dificuldade != '3') {
-			setDificuldade();
-		}
-	}
-	
-	public int getDificuldade() {
-		return this.dificuldade;
-	}
-	
 	public void setOpcao() {
 		this.opcoes = input.next().charAt(0);
-		if (this.opcoes != '1' & this.opcoes != '2' & this.opcoes != '3') {
+		if (this.opcoes != '1' & this.opcoes != '2') {
 			setOpcao();
 		}
 	}
@@ -64,7 +52,7 @@ public class InteracaoComUsuario {
 		return this.opcoes;
 	}
 	
-	public void setAcao() {
+	protected void setAcao() {
 		this.acaoNoJogo = input.next().charAt(0);
 		if(this.acaoNoJogo != 'a' & this.acaoNoJogo != 'A' & this.acaoNoJogo != 'b' & this.acaoNoJogo != 'B') {
 			setAcao();
@@ -74,5 +62,4 @@ public class InteracaoComUsuario {
 	public char getAcao() {
 		return this.acaoNoJogo;
 	}
-
 }
