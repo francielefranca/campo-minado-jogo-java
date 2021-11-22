@@ -6,27 +6,24 @@ public class Celula {
 	
 	Random random = new Random();
 	
-	int linha;
-	int coluna;
-	
 	int[][] celulas;
 	
-	int numero;
+	int linha, coluna;
 	
-	int quantidadeDeBombas = 0;
+	int quantidadeDeBombas = 10;
 	
 	int quantidadeDeBandeiras = 10;
 	
-	int pontos = 0;
-	
 	boolean sorteio;
 	
-	public void sortearMinas() {
+	int pontos = 0;
+	
+	private void sortearMinas() {
 		int x, y;
-		for(int i = 1; i <= this.quantidadeDeBombas; i++) {
-			do {;
-				x = random.nextInt(8) + 1;
-				y = random.nextInt(8) + 1;
+		for(int i = 1; i <= 10; i++) {
+			do {
+				x = random.nextInt(9) + 1;
+				y = random.nextInt(9) + 1;
 				if(this.celulas[x][y] == 1) {
 					sorteio = true;
 				} else {
@@ -38,11 +35,10 @@ public class Celula {
 		} 		
 	}
 	
-	
-	public void definirCelulas() {
-		celulas = new int[10][10];
-			for (this.linha = 1; this.linha < 9; this.linha++) {
-				for (this.coluna = 1; this.coluna < 9; this.coluna++) {
+	private void definirCelulas() {
+		celulas = new int[11][11];
+			for (this.linha = 1; this.linha <= 9; this.linha++) {
+				for (this.coluna = 1; this.coluna <= 9; this.coluna++) {
 				}
 			}
 			sortearMinas();
