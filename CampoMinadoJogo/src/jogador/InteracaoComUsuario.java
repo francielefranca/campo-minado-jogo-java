@@ -3,34 +3,34 @@ import java.util.Scanner;
 
 public class InteracaoComUsuario {
 	
-	private int linha;
-	private int coluna;
+	private int linhaDeEntrada;
+	private int colunaDeEntrada;
 	private String nomeDoJogador;
-	private char opcoes;
+	private char opcao;
 	private char acaoNoJogo;
 	
 	Scanner input = new Scanner(System.in);
 	
 	protected void setLinha() {
-		this.linha = input.nextInt();
-		if (linha > 9 || linha < 1) {
+		this.linhaDeEntrada = input.nextInt();
+		if ((linhaDeEntrada > 16) || (linhaDeEntrada < 1)) {
 			setLinha();
 		}
 	}
 	
 	public int getLinha() {
-		return this.linha;
+		return this.linhaDeEntrada -1;
 	}
 	
 	protected void setColuna() {
-		this.coluna = input.nextInt();
-		if (this.coluna > 9 || this.coluna < 1) {
+		this.colunaDeEntrada = input.nextInt();
+		if ((this.colunaDeEntrada > 16) || (this.colunaDeEntrada < 1)) {
 			setColuna();
 		}
 	}
 	
 	public int getColuna() {
-		return this.coluna;
+		return this.colunaDeEntrada;
 	}
 	
 	protected void setNome() {
@@ -41,20 +41,21 @@ public class InteracaoComUsuario {
 		return this.nomeDoJogador;
 	}
 	
-	public void setOpcao() {
-		this.opcoes = input.next().charAt(0);
-		if (this.opcoes != '1' & this.opcoes != '2') {
+	protected void setOpcao() {
+		this.opcao = input.next().charAt(0);
+		if ((this.opcao != '1') & (this.opcao != '2')) {
 			setOpcao();
 		}
 	}
 	
-	public int getOpcao() {
-		return this.opcoes;
+	public char getOpcao() {
+		return this.opcao;
 	}
 	
 	protected void setAcao() {
 		this.acaoNoJogo = input.next().charAt(0);
-		if(this.acaoNoJogo != 'a' & this.acaoNoJogo != 'A' & this.acaoNoJogo != 'b' & this.acaoNoJogo != 'B') {
+		if((this.acaoNoJogo != 'a' & this.acaoNoJogo != 'A') & (this.acaoNoJogo != 'b' & this.acaoNoJogo != 'B')) {
+			System.out.print("Escolha uma ação existente: ");
 			setAcao();
 		}
 	}
