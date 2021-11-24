@@ -96,8 +96,8 @@ public class Jogo extends InteracaoComUsuario {;
 	
 	private void acoes() {
 		System.out.println("Você quer:\nAbrir casa (A)\nPlantar uma bandeira (B)");
-		setAcao();
-		if (getAcao() == 'a' | getAcao() == 'A') {
+		super.setAcao();
+		if (super.getAcao() == 'a' | super.getAcao() == 'A') {
 			casa();
 		} else {
 			bandeira();
@@ -106,11 +106,11 @@ public class Jogo extends InteracaoComUsuario {;
 	
 	private void receberCoordenadas() {
 		System.out.print("Insira sua linha: ");
-		setLinha();
-		this.x = (-(getLinha() - 16));
+		super.setLinha();
+		this.x = (-(super.getLinha() - 16));
 		System.out.print("Insira sua coluna: ");
-		setColuna();
-		this.y = getColuna();
+		super.setColuna();
+		this.y = super.getColuna();
 	}
 	
 	private void conferirGameOver() {
