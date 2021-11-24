@@ -6,17 +6,17 @@ public class Menu extends InteracaoComUsuario{
 	
 	public Menu() {
 		System.out.print("Digite o seu nome: ");
-		setNome();
+		super.setNome();
 		opcoesDoMenu();
 	}
 	
 	private void opcoesDoMenu() {
 		
 		System.out.print("\nO que você deseja acessar?\n" + "1 - Iniciar jogo\n" + "2 - Regras do jogo\n");
-		setOpcao();
+		super.setOpcao();
 		System.out.println("");
 		
-		switch(getOpcao()) {
+		switch(super.getOpcao()) {
 		
 		case '1':
 			new Jogo();
