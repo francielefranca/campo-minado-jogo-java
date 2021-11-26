@@ -52,7 +52,7 @@ public class InteracaoComUsuario {
 		return this.opcao;
 	}
 	
-	protected void setAcao() {
+	protected void setAcao() {//verificacao se o que foi digitado pelo jogador na escolha das acoes eh valido
 		this.acaoNoJogo = input.next().charAt(0);
 		if((this.acaoNoJogo != 'a' & this.acaoNoJogo != 'A') & (this.acaoNoJogo != 'b' & this.acaoNoJogo != 'B')) {
 			System.out.print("Escolha uma ação existente: ");
