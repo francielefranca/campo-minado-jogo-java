@@ -10,7 +10,7 @@ public class Celula {
 	
 	private boolean sorteio;
 	
-	private void sortearMinas(int quantidadeDeBombas, int linha, int coluna) {
+	private void sortearMinas(int quantidadeDeBombas, int linha, int coluna) {//sorteio aleatorio das minas
 		int x, y;
 		for(int i = 1; i <= quantidadeDeBombas; i++) {
 			do {
@@ -27,7 +27,7 @@ public class Celula {
 		} 		
 	}
 	
-	private void definirCelulas(int quantidadeDeBombas, int linha, int coluna) {
+	private void definirCelulas(int quantidadeDeBombas, int linha, int coluna) {//definicao das celulas 
 		celulas = new int[linha + 2][coluna + 2];
 		for (int i = 1; i <= linha; i++) {
 			for (int j = 1; j <= coluna; j++) {
