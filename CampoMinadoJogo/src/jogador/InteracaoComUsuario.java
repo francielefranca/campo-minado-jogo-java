@@ -11,7 +11,7 @@ public class InteracaoComUsuario {
 	
 	Scanner input = new Scanner(System.in);
 	
-	protected void setLinha(int linha) {
+	protected void setLinha(int linha) {//modificacao na linha de acordo com o que foi recebido do jogador
 		this.linhaDeEntrada = input.nextInt();
 		if ((linhaDeEntrada > linha) || (linhaDeEntrada < 1)) {
 			setLinha(linha);
@@ -22,7 +22,7 @@ public class InteracaoComUsuario {
 		return this.linhaDeEntrada -1;
 	}
 	
-	protected void setColuna(int coluna) {
+	protected void setColuna(int coluna) {//modificacao na coluna de acordo com o que foi recebido do jogador
 		this.colunaDeEntrada = input.nextInt();
 		if ((this.colunaDeEntrada > coluna) || (this.colunaDeEntrada < 1)) {
 			setColuna(coluna);
@@ -33,7 +33,7 @@ public class InteracaoComUsuario {
 		return this.colunaDeEntrada;
 	}
 	
-	protected void setNome() {
+	protected void setNome() {//modificacao no nome do jogador
 		this.nomeDoJogador = input.next();
 	}
 	
@@ -41,7 +41,7 @@ public class InteracaoComUsuario {
 		return this.nomeDoJogador;
 	}
 	
-	protected void setOpcao() {
+	protected void setOpcao() {//modificacao na opcao do menu
 		this.opcao = input.next().charAt(0);
 		if ((this.opcao != '1') & (this.opcao != '2')) {
 			setOpcao();
