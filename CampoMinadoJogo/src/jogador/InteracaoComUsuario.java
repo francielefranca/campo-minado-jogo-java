@@ -11,10 +11,10 @@ public class InteracaoComUsuario {
 	
 	Scanner input = new Scanner(System.in);
 	
-	protected void setLinha() {
+	protected void setLinha(int linha) {
 		this.linhaDeEntrada = input.nextInt();
-		if ((linhaDeEntrada > 16) || (linhaDeEntrada < 1)) {
-			setLinha();
+		if ((linhaDeEntrada > linha) || (linhaDeEntrada < 1)) {
+			setLinha(linha);
 		}
 	}
 	
@@ -22,10 +22,10 @@ public class InteracaoComUsuario {
 		return this.linhaDeEntrada -1;
 	}
 	
-	protected void setColuna() {
+	protected void setColuna(int coluna) {
 		this.colunaDeEntrada = input.nextInt();
-		if ((this.colunaDeEntrada > 16) || (this.colunaDeEntrada < 1)) {
-			setColuna();
+		if ((this.colunaDeEntrada > coluna) || (this.colunaDeEntrada < 1)) {
+			setColuna(coluna);
 		}
 	}
 	
