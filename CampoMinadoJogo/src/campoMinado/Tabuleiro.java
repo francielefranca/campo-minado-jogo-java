@@ -1,19 +1,22 @@
 package campoMinado;
 
 public class Tabuleiro {
-		
-	public Celula casas = new Celula();
+	
+	public Celula casas;
 	
 	protected int linha, coluna;
 	
-	protected int quantidadeDeBombas = 40, quantidadeDeBandeiras = 40;
+	protected int quantidadeDeBombas, quantidadeDeBandeiras;
 		
-	protected void imprimirTabuleiro() {
-		casas.celulas = new int[18][18];
-		for (linha = 1; linha <= 16 ; linha++) {
-			for (coluna = 1; coluna <= 16; coluna++) {
-				casas.celulas[linha][coluna] = 9;
-				System.out.print(casas.celulas[linha][coluna] + "   ");
+	protected void imprimirTabuleiro(int linha, int coluna, int quantidadeDeBombas, int quantidadeDeBandeiras) {
+		this.linha = linha;
+		this.coluna = coluna;
+		this.quantidadeDeBombas = quantidadeDeBombas;
+		this.quantidadeDeBandeiras = quantidadeDeBandeiras;
+		for (int i = 1; i <= this.linha; i++) {
+			for (int j = 1; j <= this.coluna; j++) {
+				casas.celulas[i][j] = 9;
+				System.out.print(casas.celulas[i][j] + "   ");
 				}
 			System.out.println();
 			}
@@ -24,10 +27,10 @@ public class Tabuleiro {
 	}
 		
 	protected void marcarTabuleiro(boolean gameOver) {
-		if(gameOver == false) {
-			for (linha = 1; linha <= 16; linha++) {
-				for (coluna= 1; coluna <= 16; coluna++) {
-					System.out.print(casas.celulas[linha][coluna] + "   ");
+		if(!gameOver) {
+			for (int i = 1; i <= this.linha ; i++) {
+				for (int j= 1; j <= this.coluna; j++) {
+					System.out.print(casas.celulas[i][j] + "   ");
 				}
 				System.out.println();
 			}
@@ -38,6 +41,7 @@ public class Tabuleiro {
 	}
 		
 	public Tabuleiro() {
-		imprimirTabuleiro();
+		casas = new Celula();
+		imprimirTabuleiro(9, 9, 10, 10);
 	}
 }
