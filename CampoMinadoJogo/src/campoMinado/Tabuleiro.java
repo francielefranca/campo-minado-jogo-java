@@ -8,7 +8,7 @@ public class Tabuleiro {
 	
 	protected int quantidadeDeBombas, quantidadeDeBandeiras;
 		
-	protected void imprimirTabuleiro(int linha, int coluna, int quantidadeDeBombas, int quantidadeDeBandeiras) {
+	protected void imprimirTabuleiro(int linha, int coluna, int quantidadeDeBombas, int quantidadeDeBandeiras) {//impressao na tela do tabuleiro de celulas
 		this.linha = linha;
 		this.coluna = coluna;
 		this.quantidadeDeBombas = quantidadeDeBombas;
@@ -26,7 +26,7 @@ public class Tabuleiro {
 		System.out.println();
 	}
 		
-	protected void marcarTabuleiro(boolean gameOver) {
+	protected void marcarTabuleiro(boolean gameOver) {//marcacao no tabuleiro e informacoes durante o jogo
 		if(!gameOver) {
 			for (int i = 1; i <= this.linha ; i++) {
 				for (int j= 1; j <= this.coluna; j++) {
