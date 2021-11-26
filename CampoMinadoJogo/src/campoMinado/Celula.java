@@ -27,7 +27,7 @@ public class Celula {
 		} 		
 	}
 	
-	private void definirCelulas(int quantidadeDeBombas, int linha, int coluna) {//definicao das celulas 
+	private void definirCelulas(int quantidadeDeBombas, int linha, int coluna) {//definicao das celulas com linhas e colunas 
 		celulas = new int[linha + 2][coluna + 2];
 		for (int i = 1; i <= linha; i++) {
 			for (int j = 1; j <= coluna; j++) {
