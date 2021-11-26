@@ -4,8 +4,8 @@ import jogador.InteracaoComUsuario;
 
 public class Jogo extends InteracaoComUsuario {;
 
-	Tabuleiro tabuleiro = new Tabuleiro();
-	Celula casas = new Celula();
+	Tabuleiro tabuleiro;
+	Celula casas;
 	
 	private int x, y;
 	
@@ -15,24 +15,40 @@ public class Jogo extends InteracaoComUsuario {;
 	
 	protected boolean gameOver;
 	
-	private void conferirVizinhas() {
+	private void conferirVizinhas(int x, int y) {
 		bombasVizinhas = 0;
 		for(int i = -1; i <= 1; i++) {
 			for(int j = -1; j <= 1; j++) {
-				if(casas.celulas[this.x + i][this.y + j] == 1 && (this.x + i) <= 16 && (this.x - i) > 0 && (this.y + j) <= 16 && (this.y - j) > 0) {
+				if(casas.celulas[x + i][y + j] == 1 && (x + i) < 9 && (x - i) >= 0 && (y + j) < 9 && (y - j) >= 0) {
 					++this.bombasVizinhas;
 				}
 			}
 		}
-		tabuleiro.casas.celulas[this.x][this.y] = this.bombasVizinhas;
     }
 	
+	private void abrirCasa(int x, int y) {
+		conferirVizinhas(x, y);
+		tabuleiro.casas.celulas[x][y] = this.bombasVizinhas;
+	}
+	
+	private void abrirCasasVizinhas(int x, int y) {
+		if(tabuleiro.casas.celulas[x][y] == 0) {
+			for(int i = -1; i <= 1; i++) {
+				for(int j = -1; j <= 1; j++) {
+					if(casas.celulas[x + i][y + j] != 1) {
+						if(x + i > 0 && x + i <= 9) {
+							if(y + j > 0 && y + j <= 9) {
+								abrirCasa(x + i, y + j);
+							}
+						}
+					}
+				}
+			}
+		} 
+	}
+	
 	private void pontuacao() {
-		if(this.gameOver) {
-			return;
-		} else {
-			pontos = pontos + 100;
-		}
+		pontos = pontos + 100;
 	}
 	
 	private void casaAberta() {
@@ -45,19 +61,23 @@ public class Jogo extends InteracaoComUsuario {;
 		}
 	}
 	
-	private void abrirCasa() {
+	private void abertura() {
 		if (tabuleiro.casas.celulas[this.x][this.y] == 8) {
 			System.out.println("Casa ocupada por bandeira!\n");
-		} else {
-			conferirGameOver();
-			pontuacao();
-			conferirVizinhas();
 		}
+		conferirGameOver();
+		if(gameOver) {
+			return;
+		} else {
+			pontuacao();
+			abrirCasa(this.x, this.y);
+			abrirCasasVizinhas(this.x, this.y);
+			}
 	}
 	
 	private void casa() {
 			if (tabuleiro.casas.celulas[this.x][this.y] == 9) {
-				abrirCasa();
+				abertura();
 			} else if(tabuleiro.casas.celulas[this.x][this.y] < 8) {
 				casaAberta();
 				}
@@ -72,8 +92,13 @@ public class Jogo extends InteracaoComUsuario {;
 	}
 	
 	private void plantarBandeira() {
-		tabuleiro.casas.celulas[this.x][this.y] = 8;
-		contadorDeBandeiras();
+		if(tabuleiro.casas.celulas[this.x][this.y] != 9) {
+			System.out.println("Não se pode colocar bandeiras em casas abertas\n");
+			return;
+		} else {
+			tabuleiro.casas.celulas[this.x][this.y] = 8;
+			contadorDeBandeiras();
+		}
 	}
 	
 	private void removerBandeira() {
@@ -106,10 +131,10 @@ public class Jogo extends InteracaoComUsuario {;
 	
 	private void receberCoordenadas() {
 		System.out.print("Insira sua linha: ");
-		super.setLinha();
-		this.x = (-(super.getLinha() - 16));
+		super.setLinha(9);
+		this.x = (-(super.getLinha() - 9));
 		System.out.print("Insira sua coluna: ");
-		super.setColuna();
+		super.setColuna(9);
 		this.y = super.getColuna();
 	}
 	
@@ -119,12 +144,10 @@ public class Jogo extends InteracaoComUsuario {;
 		}
 	}
 		
-	private void fimDeJogo() {
-		for (tabuleiro.linha = 1; tabuleiro.linha <= 16 ; tabuleiro.linha++) {
-			for (tabuleiro.coluna= 1; tabuleiro.coluna <= 16; tabuleiro.coluna++) {
-				if (casas.celulas[tabuleiro.linha][tabuleiro.coluna] == 1) {
-				}
-				System.out.print(casas.celulas[tabuleiro.linha][tabuleiro.coluna] + "   ");
+	private void fimDeJogo(int linha, int coluna) {
+		for (int i = 1; i <= linha ; i++) {
+			for (int j = 1; j <= coluna; j++) {
+				System.out.print(casas.celulas[i][j] + "   ");
 			}
 			System.out.println("");
 		}
@@ -140,12 +163,14 @@ public class Jogo extends InteracaoComUsuario {;
 			tabuleiro.marcarTabuleiro(gameOver);
 			exibirPontuacao();
 			if (this.gameOver) {
-				fimDeJogo();
+				fimDeJogo(9, 9);
 				}
 		} while (!this.gameOver);
 	}
 	
 	public Jogo() {
+		tabuleiro = new Tabuleiro();
+		casas = new Celula();
 		jogo();
 	}
 }
