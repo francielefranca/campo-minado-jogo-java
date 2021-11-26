@@ -15,7 +15,7 @@ public class Jogo extends InteracaoComUsuario {;
 	
 	protected boolean gameOver;
 	
-	private void conferirVizinhas(int x, int y) {
+	private void conferirVizinhas(int x, int y) {// verificacao de celulas vizinhas
 		bombasVizinhas = 0;
 		for(int i = -1; i <= 1; i++) {
 			for(int j = -1; j <= 1; j++) {
@@ -26,12 +26,12 @@ public class Jogo extends InteracaoComUsuario {;
 		}
     }
 	
-	private void abrirCasa(int x, int y) {
+	private void abrirCasa(int x, int y) {//abrir as celulas, verificando as vizinhas antes
 		conferirVizinhas(x, y);
 		tabuleiro.casas.celulas[x][y] = this.bombasVizinhas;
 	}
 	
-	private void abrirCasasVizinhas(int x, int y) {
+	private void abrirCasasVizinhas(int x, int y) {//abrir as celulas vizinhas, quando a celula for igual a zero
 		if(tabuleiro.casas.celulas[x][y] == 0) {
 			for(int i = -1; i <= 1; i++) {
 				for(int j = -1; j <= 1; j++) {
@@ -47,11 +47,11 @@ public class Jogo extends InteracaoComUsuario {;
 		} 
 	}
 	
-	private void pontuacao() {
+	private void pontuacao() {//pontuacao do jogo
 		pontos = pontos + 100;
 	}
 	
-	private void casaAberta() {
+	private void casaAberta() {//mensagem para celula ja aberta
 		System.out.println("Casa já aberta.\n");
 	}
 	
@@ -61,7 +61,7 @@ public class Jogo extends InteracaoComUsuario {;
 		}
 	}
 	
-	private void abertura() {
+	private void abertura() {//verificacao de abertura de celula 
 		if (tabuleiro.casas.celulas[this.x][this.y] == 8) {
 			System.out.println("Casa ocupada por bandeira!\n");
 		}
@@ -83,7 +83,7 @@ public class Jogo extends InteracaoComUsuario {;
 				}
 			}
 	
-	private void contadorDeBandeiras() {
+	private void contadorDeBandeiras() {//adicao ou subtracao da quantidade de bandeiras
 		if (tabuleiro.casas.celulas[this.x][this.y] == 8) {
 			--tabuleiro.quantidadeDeBandeiras;
 			} else {
@@ -91,7 +91,7 @@ public class Jogo extends InteracaoComUsuario {;
 			}
 	}
 	
-	private void plantarBandeira() {
+	private void plantarBandeira() {//marcacao de celula com bandeira
 		if(tabuleiro.casas.celulas[this.x][this.y] != 9) {
 			System.out.println("Não se pode colocar bandeiras em casas abertas\n");
 			return;
@@ -101,7 +101,7 @@ public class Jogo extends InteracaoComUsuario {;
 		}
 	}
 	
-	private void removerBandeira() {
+	private void removerBandeira() {//remocao de celula com bandeira
 		tabuleiro.casas.celulas[this.x][this.y] = 9;
 		contadorDeBandeiras();
 	}
@@ -119,7 +119,7 @@ public class Jogo extends InteracaoComUsuario {;
 		}
 	}
 	
-	private void acoes() {
+	private void acoes() {//recebendo a acao escolhida do jogador, abrir celula ou colocar uma bandeira
 		System.out.println("Você quer:\nAbrir casa (A)\nPlantar uma bandeira (B)");
 		super.setAcao();
 		if (super.getAcao() == 'a' | super.getAcao() == 'A') {
@@ -129,7 +129,7 @@ public class Jogo extends InteracaoComUsuario {;
 			}
 		}
 	
-	private void receberCoordenadas() {
+	private void receberCoordenadas() {//recebendo coordenadas do jogador, linha e coluna 
 		System.out.print("Insira sua linha: ");
 		super.setLinha(9);
 		this.x = (-(super.getLinha() - 9));
@@ -144,7 +144,7 @@ public class Jogo extends InteracaoComUsuario {;
 		}
 	}
 		
-	private void fimDeJogo(int linha, int coluna) {
+	private void fimDeJogo(int linha, int coluna) {//game over
 		for (int i = 1; i <= linha ; i++) {
 			for (int j = 1; j <= coluna; j++) {
 				System.out.print(casas.celulas[i][j] + "   ");
