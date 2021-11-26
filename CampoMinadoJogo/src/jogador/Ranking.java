@@ -28,26 +28,26 @@ public class Ranking  {
 		this.pontuacao = pontosTotais;
 	}
 	
-	public static void rankigZerado() {
+	public static void rankigZerado() {//quando nao tiver nenhum jogador no ranking, o ranking sera zerado
 		
 	}
 
-	public static void dadosJogador() {
+	public static void dadosJogador() {//informacoes do jogador como nome, nivel, tempo, pontuacao
 		
 	}
 
-	public static void rankingOrdem() {
+	public static void rankingOrdem() {//dados do jogador em ordem, top 10
 		
 	}
 
-	public static void imprimirRanking() {
+	public static void imprimirRanking() {//mostrar na tela os top 10
 		System.out.println("NOME |\t DIFICULDADE |\t PONTOS |\t TEMPO");
 		for(int i = 0; i < 10; i++) {
 			System.out.printf("%s |\t\t %i |\t %i |\t %i",Nomes[i] , niveisDosJogadores[i], pontuacaoDosJogadores[i], tempoDosJogadores[i]);
 		}
 	}
 
-	public static void lerRanking() {
+	public static void lerRanking() {//leitura do arquivo .txt do ranking
 		
 		File arquivoRanking = new File("arquivoRanking.txt");
 		
@@ -72,7 +72,7 @@ public class Ranking  {
 		
 	}
 
-	public static void salvarRanking() {
+	public static void salvarRanking() {//salvamento do arquivo .txt do ranking
 		
 	}
 }
