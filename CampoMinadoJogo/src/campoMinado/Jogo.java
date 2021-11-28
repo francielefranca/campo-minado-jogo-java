@@ -2,7 +2,7 @@ package campoMinado;
 
 import jogador.InteracaoComUsuario;
 
-public class Jogo extends InteracaoComUsuario {;
+public class Jogo extends InteracaoComUsuario {
 
 	Tabuleiro tabuleiro;
 	Celula casas;
