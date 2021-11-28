@@ -8,14 +8,14 @@ public class Tabuleiro {
 	
 	protected int quantidadeDeBombas, quantidadeDeBandeiras;
 		
-	protected void imprimirTabuleiro(int linha, int coluna, int quantidadeDeBombas, int quantidadeDeBandeiras) {//impressao na tela do tabuleiro de celulas
+	protected void imprimirTabuleiro(int linha, int coluna, int quantidadeDeBombas, int quantidadeDeBandeiras) { //impressão na tela do tabuleiro de células
 		this.linha = linha;
 		this.coluna = coluna;
 		this.quantidadeDeBombas = quantidadeDeBombas;
 		this.quantidadeDeBandeiras = quantidadeDeBandeiras;
 		for (int i = 1; i <= this.linha; i++) {
 			for (int j = 1; j <= this.coluna; j++) {
-				casas.celulas[i][j] = 9;
+				casas.celulas[i][j] = '-';
 				System.out.print(casas.celulas[i][j] + "   ");
 				}
 			System.out.println();
@@ -26,7 +26,7 @@ public class Tabuleiro {
 		System.out.println();
 	}
 		
-	protected void marcarTabuleiro(boolean gameOver) {//marcacao no tabuleiro e informacoes durante o jogo
+	protected void imprimirTabuleiro(boolean gameOver) { //marcação no tabuleiro e informações durante o jogo
 		if(!gameOver) {
 			for (int i = 1; i <= this.linha ; i++) {
 				for (int j= 1; j <= this.coluna; j++) {
