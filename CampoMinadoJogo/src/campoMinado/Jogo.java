@@ -24,7 +24,7 @@ public class Jogo extends InteracaoComUsuario {
 				}
 			}
 		}
-    }
+    	}
 	
 	private void abrirCasa(int x, int y) { //abrir as células, verificando as vizinhas antes
 		conferirVizinhas(x, y);
