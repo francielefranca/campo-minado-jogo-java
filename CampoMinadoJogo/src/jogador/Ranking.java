@@ -1,78 +1,125 @@
 package jogador;
 
-import campoMinado.Jogo;
-import campoMinado.Menu;
-
-//import java.util.Arrays;
 import java.io.File;
 import java.io.FileReader;
-//import java.io.FileWriter;
+import java.io.FileWriter;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+import campoMinado.Jogo;
 
 public class Ranking  {
 
-	Jogo jogo = new Jogo();
-	Menu menu = new Menu();
-	
-	String nome;
-	int nivel;
-	int pontuacao;
+	private int nivelDificuldade;
+	//double [] tempo = new double[10];
+	//String [] nome = new String[10];
 
-	static String[] Nomes = new String[11];
-	static int[] pontuacaoDosJogadores = new int[10];
-	static int[] niveisDosJogadores = new int[10];
-	static float[] tempoDosJogadores = new float[10];
-	
-	public Ranking(int pontosTotais){//para receber o nome, pontuacao e nivel do jogador
-		this.pontuacao = pontosTotais;
-	}
-	
-	public static void rankigZerado() {//quando nao tiver nenhum jogador no ranking, o ranking sera zerado
-		
+	public Ranking(){
 	}
 
-	public static void dadosJogador() {//informacoes do jogador como nome, nivel, tempo, pontuacao
-		
-	}
+	/*public void Sort(String nomeJogador) { //sort manual ---> tetse
+		double time1;
+		String nomes2;
 
-	public static void rankingOrdem() {//dados do jogador em ordem, top 10
-		
-	}
+		for(int i = 0; i<tempo.length -1; i++) {
+			for(int j = 0; j<tempo.length -1; j++) {
+				System.out.println(i + " " + j);
+				if(tempo[j]>tempo[j+1]) {
+					time1 = tempo[j];
+					tempo[j] = tempo[j+1];
+					tempo[j+1] = time1;
+					nomes2 = nome[j];
+					nome[j] = nome[j+1];
+					nome[j+1] = nomes2;
+				}
+			}
+		}
 
-	public static void imprimirRanking() {//mostrar na tela os top 10
-		System.out.println("NOME |\t DIFICULDADE |\t PONTOS |\t TEMPO");
-		for(int i = 0; i < 10; i++) {
-			System.out.printf("%s |\t\t %i |\t %i |\t %i",Nomes[i] , niveisDosJogadores[i], pontuacaoDosJogadores[i], tempoDosJogadores[i]);
+		for(int k = 0; k < 10; k++) {
+			System.out.println(nome[k] + " " + tempo[k]);
+		}
+	}*/
+
+	public String gerarDescricaoDificuldade(int nivelDificuldade) {
+		if(nivelDificuldade == 1) {
+			return "Nivel Facil";
+		}else if(nivelDificuldade == 2) {
+			return "Nivel medio";
+		}else if(nivelDificuldade == 3) {
+			return "Nivel dificil";
+		}else {
+			return "Nivel maluco";
 		}
 	}
 
-	public static void lerRanking() {//leitura do arquivo .txt do ranking
-		
+	public void salvarRanking(boolean vitoria, int nivelDificuldade, Duration tempoDecorrido) {
+		try {
+			File arquivoRanking = new File("arquivoRanking.txt");
+
+			if (!arquivoRanking.exists()) {
+				arquivoRanking.createNewFile();
+			}
+
+			FileWriter fw = new FileWriter(arquivoRanking, true);
+			BufferedWriter bw = new BufferedWriter(fw);
+
+			String data = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+			String nivel = gerarDescricaoDificuldade(nivelDificuldade);
+			String duracao = "Duracao " + tempoDecorrido.toHours() + ":" + tempoDecorrido.toMinutes() + ":" + tempoDecorrido.toSeconds();
+			String resultado = vitoria ? "Ganhou" : "Perdeu ";
+
+			bw.write(data + "|" + nivel + "|" + duracao + "|" + resultado);
+			bw.newLine();
+
+			bw.close();
+			fw.close();
+		}catch(IOException e) {
+			e.printStackTrace();
+			throw new RuntimeException("Erro ao salvar o arquivo do ranking");
+		}
+	}
+
+	public void lerRanking() {
+
 		File arquivoRanking = new File("arquivoRanking.txt");
-		
+
 		if(arquivoRanking.exists()) {
 			try {
 				FileReader fr = new FileReader(arquivoRanking);
 				BufferedReader br = new BufferedReader(fr);
-				
+
 				System.out.println();
 				while(br.ready()) {
 					String linha = br.readLine();
 					System.out.println(linha);
 				}
 				System.out.println();
-				
 				br.close();
 				fr.close();
-			}catch(IOException e) {
-				throw new RuntimeException("Erro ao ler o arquivo.");
+			}catch(Exception e) {
+				throw new RuntimeException("Erro ao ler o arquivo do ranking.");
 			}
 		}
-		
 	}
 
-	public static void salvarRanking() {//salvamento do arquivo .txt do ranking
-		
+	public void apagarRanking() {
+		File arquivoRanking = new File("arquivoRanking.txt");
+
+		if(arquivoRanking.exists()) {
+			try {
+				FileWriter fw = new FileWriter(arquivoRanking, false);
+
+				fw.write("");
+				fw.close();
+			}catch(IOException e) {
+				e.printStackTrace();
+				throw new RuntimeException("Erro ao apagar o arquivo do ranking.");
+			}
+		}
+		System.out.println("\n Arquivo do Ranking apagado com sucesso. \n");
 	}
 }
