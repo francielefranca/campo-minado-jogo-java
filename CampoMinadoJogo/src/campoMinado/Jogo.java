@@ -1,176 +1,297 @@
 package campoMinado;
 
+import java.util.Random;
+
+import celula.Celula;
+
+import java.util.InputMismatchException;
+import excecoes.TamanhoInvalidoException;
+import excecoes.AcaoInvalidaException;
 import jogador.InteracaoComUsuario;
 
 public class Jogo extends InteracaoComUsuario {
 
-	Tabuleiro tabuleiro;
-	Celula casas;
-	
-	private int x, y;
-	
-	private int bombasVizinhas;
-	
-	protected int pontos = 0;
-	
-	protected boolean gameOver;
-	
-	private void conferirVizinhas(int x, int y) { //verificação de células vizinhas
-		bombasVizinhas = 0;
-		for(int i = -1; i <= 1; i++) {
-			for(int j = -1; j <= 1; j++) {
-				if(casas.celulas[x + i][y + j] == 'M' && (x + i) < 9 && (x - i) >= 0 && (y + j) < 9 && (y - j) >= 0) {
-					++this.bombasVizinhas;
-				}
+	private Random sort;
+	// private Interface telaDoJogo;
+	private Tabuleiro emJogo;
+
+	public int linha;
+	public int coluna;
+	public int minas;
+	public int bandeiras;
+
+	public void dificuldades(String dificuldade) {
+		if(dificuldade.isBlank()) {
+			linha = 9;
+			coluna = 9;
+			minas = 10;
+			bandeiras = 10;
+		} else {
+			switch (dificuldade) {
+			case "1":
+				linha = 9;
+				coluna = 9;
+				minas = 10;
+				bandeiras = 10;
+				break;
+			case "2":
+				linha = 16;
+				coluna = 16;
+				minas = 40;
+				bandeiras = 40;
+				break;
+			case "3":
+				linha = 16;
+				coluna = 30;
+				minas = 99;
+				bandeiras = 99;
+				break;
 			}
 		}
-    	}
-	
-	private void abrirCasa(int x, int y) { //abrir as células, verificando as vizinhas antes
-		conferirVizinhas(x, y);
-		tabuleiro.casas.celulas[x][y] = Character.forDigit(this.bombasVizinhas, 10);
 	}
-	
-	private void abrirCasasVizinhas(int x, int y) { //abrir as células vizinhas, quando a célula for vazia
-		if(tabuleiro.casas.celulas[x][y] == '0') {
-			for(int i = -1; i <= 1; i++) {
-				for(int j = -1; j <= 1; j++) {
-					if(casas.celulas[x + i][y + j] != 'M') {
-						if(x + i > 0 && x + i <= 9) {
-							if(y + j > 0 && y + j <= 9) {
-								abrirCasa(x + i, y + j);
-							}
-						}
+
+	private int x, y;
+	private int pontos = 0;
+	private boolean gameOver;
+
+	private void setGameOver(boolean gameOver) {
+		this.gameOver = gameOver;
+	}
+
+	protected boolean getGameOver() {
+		return this.gameOver;
+	}
+
+	private void pontuacao() { // pontuacao do jogo
+		pontos = pontos + 100;
+	}
+
+	private void exibirPontuacao() { // exibir pontuacao
+		if (!getGameOver()) {
+			System.out.println("Pontuacao: " + pontos);
+		}
+	}
+
+	private void exibirBandeiras() { // exibe a quantidade de bandeiras remanescentes
+		if (!getGameOver()) {
+			System.out.println("Bandeiras: " + bandeiras);
+		}
+	}
+
+	private void posicionarVizinhas(int linha, int coluna) {
+		for (int i = 0; i < linha; i++) {
+			for (int j = 0; j < coluna; j++) {
+				Celula casa = emJogo.tabuleiro[i][j];
+				if (i > 0) {
+					if (j > 0) {
+						casa.adicionarVizinhas(emJogo.tabuleiro[i - 1][j - 1]);
+					}
+					casa.adicionarVizinhas(emJogo.tabuleiro[i - 1][j]);
+					if (j < coluna - 1) {
+						casa.adicionarVizinhas(emJogo.tabuleiro[i - 1][j + 1]);
+					}
+				}
+				if (j > 0) {
+					casa.adicionarVizinhas(emJogo.tabuleiro[i][j - 1]);
+				}
+				if (j < coluna - 1) {
+					casa.adicionarVizinhas(emJogo.tabuleiro[i][j + 1]);
+				}
+				if (i < linha - 1) {
+					if (j > 0) {
+						casa.adicionarVizinhas(emJogo.tabuleiro[i + 1][j - 1]);
+					}
+					casa.adicionarVizinhas(emJogo.tabuleiro[i + 1][j]);
+					if (j < coluna - 1) {
+						casa.adicionarVizinhas(emJogo.tabuleiro[i + 1][j + 1]);
 					}
 				}
 			}
 		}
 	}
-	
-	private void pontuacao() { //pontuação do jogo
-		pontos = pontos + 100;
+
+	private void abrir(int linha, int coluna) {
+		Celula casa = emJogo.tabuleiro[linha][coluna];
+		casa.setFechada(false);
 	}
-	
-	private void casaAberta() { //mensagem para célula já aberta
-		System.out.println("Casa já aberta.\n");
+
+	private void abrirCasas(int linha, int coluna) { // abre as casas escolhida escolhida pelo jogador e, se não houver
+														// vizinhas, abre em cascata
+		abrir(linha, coluna);
 	}
-	
-	private void casaComBandeira() { //mensagem para célula marcada
-		System.out.println("Casa ocupada por bandeira!");
-	}
-	
-	private void exibirPontuacao() { //exibir pontuação
-		if(this.gameOver == false) {
-			System.out.println("Pontuação: " + pontos);
-		}
-	}
-	
-	private void abertura() { //verificação de abertura de célula 
+
+	private void abertura() { // verificacao de abertura de celula
 		conferirGameOver();
-		if(gameOver) {
+		if (getGameOver()) {
 			return;
 		} else {
+			abrirCasas(this.x, this.y);
 			pontuacao();
-			abrirCasa(this.x, this.y);
-			abrirCasasVizinhas(this.x, this.y);
-			}
-	}
-	
-	private void casa() { //verificação do estado da célula para ação de casas
-			if (tabuleiro.casas.celulas[this.x][this.y] == '-') {
-				abertura();
-			} else if(tabuleiro.casas.celulas[this.x][this.y] == 'B') {
-				casaComBandeira();
-				} else {
-					casaAberta();
-				}
-			}
-	
-	private void contadorDeBandeiras() { //adição ou subtração da quantidade de bandeiras
-		if (tabuleiro.casas.celulas[this.x][this.y] == 'B') {
-			--tabuleiro.quantidadeDeBandeiras;
-			} else {
-				++tabuleiro.quantidadeDeBandeiras;
-			}
-	}
-	
-	private void plantarBandeira() { //marcação de célula com bandeira
-		tabuleiro.casas.celulas[this.x][this.y] = 'B';
-		contadorDeBandeiras();
-	}
-	
-	private void removerBandeira() { //remoção de bandeira da célula
-		tabuleiro.casas.celulas[this.x][this.y] = '-';
-		contadorDeBandeiras();
-	}
-	
-	private void bandeira() { //verificação do estado da célula para ação de bandeiras
-		if(tabuleiro.casas.celulas[this.x][this.y] == '-') {
-			plantarBandeira();
-		} else if(tabuleiro.casas.celulas[this.x][this.y] == 'B') {
-			removerBandeira();
-			} else {
-				casaAberta();
-			}
-		
-		if (tabuleiro.quantidadeDeBandeiras < 1) {
-			System.out.println("Suas bandeiras acabaram");
-			acoes();
 		}
 	}
-	
-	private void acoes() { //recebendo a ação escolhida pelo jogador
-		System.out.println("Você quer:\nAbrir casa (A)\nPlantar uma bandeira (B)");
-		super.setAcao();
-		if (super.getAcao() == 'a' | super.getAcao() == 'A') {
+
+	private void casaMarcada() { // mensagem para celula marcada
+		System.out.println("Nao pode abrir uma casa marcada");
+		receberCoordenadas();
+	}
+
+	private void casaAberta() { // mensagem para celula ja aberta
+		System.out.println("Casa ja aberta.\n");
+		receberCoordenadas();
+	}
+
+	private void casa() { // verificacao do estado da celula para acao de casas
+		Celula casa = emJogo.tabuleiro[this.x][this.y];
+		if (casa.getFechada()) {
+			if (casa.getMarcada()) {
+				casaMarcada();
+			} else {
+				abertura();
+			}
+		} else {
+			casaAberta();
+		}
+	}
+
+	private void contadorDeBandeiras() { // adicao ou subtracao da quantidade de bandeiras
+		Celula casa = emJogo.tabuleiro[this.x][this.y];
+		if (casa.getMarcada()) {
+			bandeiras--;
+		} else {
+			bandeiras++;
+		}
+	}
+
+	private void plantarBandeira() { // marcacao de celula com bandeira
+		Celula casa = emJogo.tabuleiro[this.x][this.y];
+		casa.setMarcada(true);
+		contadorDeBandeiras();
+	}
+
+	private void removerBandeira() { // remocao de bandeira da celula
+		Celula casa = emJogo.tabuleiro[this.x][this.y];
+		casa.setMarcada(false);
+		contadorDeBandeiras();
+	}
+
+	private void bandeira() { // verificacao do estado da celula para acao de bandeiras
+		Celula casa = emJogo.tabuleiro[this.x][this.y];
+		if (casa.getFechada()) {
+			if (!casa.getMarcada()) {
+				plantarBandeira();
+			} else {
+				removerBandeira();
+			}
+		} else {
+			casaAberta();
+		}
+	}
+
+	private void acoes() { // recebendo a acao escolhida pelo jogador
+		try {
+			super.setAcao();
+		} catch (AcaoInvalidaException acao) {
+			System.out.println(acao.getMessage());
+			acoes();
+		}
+		if (super.getAcao() == 'a' || super.getAcao() == 'A') {
 			casa();
 		} else {
 			bandeira();
-			}
 		}
-	
-	private void receberCoordenadas() { //recebendo coordenadas do jogador, linha e coluna
-		System.out.print("Insira sua linha: ");
-		super.setLinha(9);
-		this.x = (-(super.getLinha() - 9));
-		System.out.print("Insira sua coluna: ");
-		super.setColuna(9);
+	}
+
+	private void receberLinha() {
+		try {
+			super.setLinha(linha);
+		} catch (TamanhoInvalidoException tamanho) {
+			System.out.println(tamanho.getMessage());
+			receberLinha();
+		} catch (InputMismatchException tipo) {
+			System.out.println("Tipo de entrada invalido, insira apenas numeros");
+			receberLinha();
+		}
+		this.x = (-(super.getLinha() - (linha - 1)));
+	}
+
+	private void receberColuna() {
+		try {
+			super.setColuna(coluna);
+		} catch (TamanhoInvalidoException tamanho) {
+			System.out.println(tamanho.getMessage());
+			receberColuna();
+		} catch (InputMismatchException tipo) {
+			System.out.println("Tipo de entrada invalido, insira apenas numeros");
+			receberColuna();
+		}
 		this.y = super.getColuna();
 	}
-	
-	private void conferirGameOver() {
-		if(casas.celulas[this.x][this.y] == 'M') {
-			this.gameOver = true;
-		}
+
+	private void receberCoordenadas() { // recebendo coordenadas do jogador, linha e coluna
+		receberLinha();
+		receberColuna();
+		acoes();
 	}
-		
-	private void fimDeJogo(int linha, int coluna) { //exibição do fim de jogo
-		for (int i = 1; i <= linha ; i++) {
-			for (int j = 1; j <= coluna; j++) {
-				System.out.print(casas.celulas[i][j] + "   ");
+
+	private void sortearMinas(int minas, int linha, int coluna) { // sorteio das minas
+		sort = new Random();
+		int q = minas;
+		int l, c;
+		while (q > 0) {
+			l = this.sort.nextInt(linha);
+			c = this.sort.nextInt(coluna);
+			Celula casa = emJogo.tabuleiro[l][c];
+			if (!casa.getMina()) {
+				casa.minar();
+				q--;
 			}
-			System.out.println("");
 		}
-		System.out.println("");
-		System.out.println("Havia uma mina, você perdeu.");
-		System.out.println("Pontuação total: " + pontos);
 	}
-	
-	protected void jogo() { //execução do jogo
-		do {
-			receberCoordenadas();
-			acoes();
-			tabuleiro.imprimirTabuleiro(gameOver);
-			exibirPontuacao();
-			if (this.gameOver) {
-				fimDeJogo(9, 9);
+
+	private void conferirGameOver() { // confere se foi encontrada uma mina
+		Celula casa = emJogo.tabuleiro[this.x][this.y];
+		if (casa.getMina()) {
+			setGameOver(true);
+		}
+	}
+
+	private void fimDeJogo() { // exibicao do fim de jogo
+		if (getGameOver()) {
+			for (int i = 0; i < linha; i++) {
+				for (int j = 0; j < coluna; j++) {
+					Celula casa = emJogo.tabuleiro[i][j];
+					casa.setFechada(false);
+					System.out.print(casa + "   ");
 				}
-		} while (!this.gameOver);
+				System.out.println();
+			}
+			System.out.println("Havia uma mina, voce perdeu.");
+			System.out.println("Pontuacao total: " + pontos);
+		}
 	}
-	
-	public Jogo() {
-		tabuleiro = new Tabuleiro();
-		casas = new Celula();
-		jogo();
+
+	private void jogar() { // execucao do jogo
+		do {
+			emJogo.tabuleiroEmJogo(getGameOver(), linha, coluna);
+			exibirPontuacao();
+			exibirBandeiras();
+			receberCoordenadas();
+			if (getGameOver()) {
+				fimDeJogo();
+			}
+		} while (!getGameOver());
+	}
+
+	public Jogo(String dificuldade) throws NullPointerException { // construtor que inicia o processamento jogo
+		setGameOver(false);
+		if(dificuldade.equals(null)) {
+			throw new NullPointerException();
+		}
+		dificuldades(dificuldade);
+		emJogo = new Tabuleiro(linha, coluna);
+		sortearMinas(minas, linha, coluna);
+		posicionarVizinhas(linha, coluna);
+		// telaDoJogo = new Interface();
+		jogar();
 	}
 }
