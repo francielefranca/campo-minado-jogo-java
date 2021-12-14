@@ -1,47 +1,32 @@
 package campoMinado;
 
+import celula.*;
+
 public class Tabuleiro {
 	
-	public Celula casas;
+	protected Celula[][] tabuleiro;
 	
-	protected int linha, coluna;
-	
-	protected int quantidadeDeBombas, quantidadeDeBandeiras;
-		
-	protected void imprimirTabuleiro(int linha, int coluna, int quantidadeDeBombas, int quantidadeDeBandeiras) { //impressão na tela do tabuleiro de células
-		this.linha = linha;
-		this.coluna = coluna;
-		this.quantidadeDeBombas = quantidadeDeBombas;
-		this.quantidadeDeBandeiras = quantidadeDeBandeiras;
-		for (int i = 1; i <= this.linha; i++) {
-			for (int j = 1; j <= this.coluna; j++) {
-				casas.celulas[i][j] = '-';
-				System.out.print(casas.celulas[i][j] + "   ");
-				}
-			System.out.println();
-			}
-		System.out.println();
-		System.out.println("Bombas: " +quantidadeDeBombas);
-		System.out.println("Bandeiras : " +quantidadeDeBandeiras);
-		System.out.println();
+	public Tabuleiro(int linha, int coluna) {
+		tabuleiro = new Celula[linha][coluna];
+		gerarTabuleiro(linha, coluna);
 	}
 		
-	protected void imprimirTabuleiro(boolean gameOver) { //marcação no tabuleiro e informações durante o jogo
+	protected void gerarTabuleiro(int linha, int coluna) { 
+		for (int i = 0; i < linha; i++) {
+			for (int j = 0; j < coluna; j++) {
+				tabuleiro[i][j] = new CelulaVazia();
+			}
+		}
+	}
+	
+	protected void tabuleiroEmJogo(boolean gameOver, int linha, int coluna) {
 		if(!gameOver) {
-			for (int i = 1; i <= this.linha ; i++) {
-				for (int j= 1; j <= this.coluna; j++) {
-					System.out.print(casas.celulas[i][j] + "   ");
+			for(int i = 0; i < linha; i++) {
+				for(int j = 0; j < coluna; j++) {
+					System.out.print(tabuleiro[i][j] + "   ");
 				}
 				System.out.println();
 			}
-			System.out.println();
-			System.out.println("Bombas: " +quantidadeDeBombas);
-			System.out.println("Bandeiras : " +quantidadeDeBandeiras);
 		}
-	}
-		
-	public Tabuleiro() {
-		casas = new Celula();
-		imprimirTabuleiro(9, 9, 10, 10);
 	}
 }
