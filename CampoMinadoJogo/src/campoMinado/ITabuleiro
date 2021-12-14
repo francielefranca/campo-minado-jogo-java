@@ -1,0 +1,9 @@
+package campoMinado;
+
+public interface ITabuleiro {
+	
+	public void iniciarMatrizDeCampos();
+	
+	public void imprimirTabuleiro();
+	
+}
