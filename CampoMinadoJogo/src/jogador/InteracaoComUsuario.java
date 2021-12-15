@@ -13,7 +13,7 @@ public class InteracaoComUsuario {
 	private String nomeDoJogador;
 	private char opcao;
 	private char acaoNoJogo;
-	private String dificuldade;
+	private String dificuldadeDoJogo;
 
 	private Scanner inputLinha;
 	private Scanner inputColuna;
@@ -28,11 +28,11 @@ public class InteracaoComUsuario {
 		System.out.print("Insira sua linha: ");
 		this.linhaDeEntrada = inputLinha.nextInt();
 		if (linhaDeEntrada > linha || linhaDeEntrada < 1) {
-			throw new TamanhoInvalidoException("Tamanho invalido");
+			throw new TamanhoInvalidoException("Tamanho invalido.");
 		}
 	}
 
-	public int getLinha() {
+	protected int getLinha() {
 		return this.linhaDeEntrada - 1;
 	}
 
@@ -42,11 +42,11 @@ public class InteracaoComUsuario {
 		System.out.print("Insira sua coluna: ");
 		this.colunaDeEntrada = inputColuna.nextInt();
 		if (colunaDeEntrada > coluna || colunaDeEntrada < 1) {
-			throw new TamanhoInvalidoException("Tamanho invalido");
+			throw new TamanhoInvalidoException("Tamanho invalido.");
 		}
 	}
 
-	public int getColuna() {
+	protected int getColuna() {
 		return this.colunaDeEntrada - 1;
 	}
 
@@ -56,7 +56,7 @@ public class InteracaoComUsuario {
 		this.nomeDoJogador = inputNome.next();
 	}
 
-	public String getNome() {
+	protected String getNome() {
 		return this.nomeDoJogador;
 	}
 
@@ -66,11 +66,11 @@ public class InteracaoComUsuario {
 				+ "3 - Niveis de dificuldade\n");
 		this.opcao = inputOpcao.next().charAt(0);
 		if (this.opcao != '1' && this.opcao != '2' && this.opcao != '3') {
-			throw new OpcaoInvalidaException("Opcao invalida");
+			throw new OpcaoInvalidaException("Opcao invalida.");
 		}
 	}
 
-	public char getOpcao() {
+	protected char getOpcao() {
 		return this.opcao;
 	}
 
@@ -86,25 +86,25 @@ public class InteracaoComUsuario {
 		}
 	}
 
-	public char getAcao() {
+	protected char getAcao() {
 		return this.acaoNoJogo;
 	}
 
-	public void setDificuldade() throws OpcaoInvalidaException {
+	protected void setDificuldade() throws OpcaoInvalidaException {
 		inputDificuldade = new Scanner(System.in);
 		System.out.println("1 - Facil\n" + "2 - Medio\n" + "3 - Dificil");
-		this.dificuldade = inputDificuldade.next();
-		if (!this.dificuldade.equals("1")) {
-			if (!this.dificuldade.equals("2")) {
-				if (!this.dificuldade.equals("3")) {
+		this.dificuldadeDoJogo = inputDificuldade.next();
+		if (!this.dificuldadeDoJogo.equals("1")) {
+			if (!this.dificuldadeDoJogo.equals("2")) {
+				if (!this.dificuldadeDoJogo.equals("3")) {
 					throw new OpcaoInvalidaException("Opcao invalida.");
 				}
 			}
 		}
 	}
 
-	public String getDificuldade() {
-		return this.dificuldade;
+	protected String getDificuldade() {
+		return this.dificuldadeDoJogo;
 	}
 
 }
