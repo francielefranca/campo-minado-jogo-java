@@ -8,7 +8,6 @@ public abstract class Celula {
 	public boolean vazia;
 	public boolean marcada;
 	public boolean mina;
-	public boolean minaVizinha;
 	
 	public ArrayList<Celula>campo;
 	
@@ -47,15 +46,9 @@ public abstract class Celula {
 	
 	public boolean getMina() {
 		return this.mina;
-	}	
+	}
 	
-	public boolean getVizinha() {
-		return this.minaVizinha;
-	}
-
-	public void setVizinha(boolean vizinha) {
-		this.minaVizinha = vizinha;
-	}
+	public abstract void abrirCelula();
 	
 	public abstract int numeroDeMinasVizinhas();
 	
