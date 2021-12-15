@@ -14,6 +14,7 @@ public class Jogo extends InteracaoComUsuario {
 	private Random sort;
 	// private Interface telaDoJogo;
 	private Tabuleiro emJogo;
+	private Celula casa;
 
 	public int linha;
 	public int coluna;
@@ -21,37 +22,30 @@ public class Jogo extends InteracaoComUsuario {
 	public int bandeiras;
 
 	public void dificuldades(String dificuldade) {
-		if(dificuldade.isBlank()) {
+		switch (dificuldade) {
+		case "1":
 			linha = 9;
 			coluna = 9;
 			minas = 10;
 			bandeiras = 10;
-		} else {
-			switch (dificuldade) {
-			case "1":
-				linha = 9;
-				coluna = 9;
-				minas = 10;
-				bandeiras = 10;
-				break;
-			case "2":
-				linha = 16;
-				coluna = 16;
-				minas = 40;
-				bandeiras = 40;
-				break;
-			case "3":
-				linha = 16;
-				coluna = 30;
-				minas = 99;
-				bandeiras = 99;
-				break;
+			break;
+		case "2":
+			linha = 16;
+			coluna = 16;
+			minas = 40;
+			bandeiras = 40;
+			break;
+		case "3":
+			linha = 16;
+			coluna = 30;
+			minas = 99;
+			bandeiras = 99;
+			break;
 			}
 		}
-	}
 
 	private int x, y;
-	private int pontos = 0;
+	private int pontos;
 	private boolean gameOver;
 
 	private void setGameOver(boolean gameOver) {
@@ -81,7 +75,7 @@ public class Jogo extends InteracaoComUsuario {
 	private void posicionarVizinhas(int linha, int coluna) {
 		for (int i = 0; i < linha; i++) {
 			for (int j = 0; j < coluna; j++) {
-				Celula casa = emJogo.tabuleiro[i][j];
+				casa = emJogo.tabuleiro[i][j];
 				if (i > 0) {
 					if (j > 0) {
 						casa.adicionarVizinhas(emJogo.tabuleiro[i - 1][j - 1]);
@@ -110,24 +104,36 @@ public class Jogo extends InteracaoComUsuario {
 		}
 	}
 
-	private void abrir(int linha, int coluna) {
-		Celula casa = emJogo.tabuleiro[linha][coluna];
-		casa.setFechada(false);
+	private void abrirCasas(int linhaDoJogador, int colunaDoJogador) { // abre as casas escolhida escolhida pelo jogador e, se não houver vizinhas, abre em cascata
+		casa = emJogo.tabuleiro[linhaDoJogador][colunaDoJogador];
+		if(casa.getMina()) {
+			setGameOver(true);
+		} else if(casa.numeroDeMinasVizinhas() != 0) {
+			casa.abrirCelula();
+			pontuacao();
+			} else {
+			for(int i = -1; i < 2; i++) {
+				for(int j = -1; j < 2; j++) {
+					if(linhaDoJogador + i > -1 && linhaDoJogador + i < linha) {
+						if(colunaDoJogador + j > -1 && colunaDoJogador + j < coluna) {
+							emJogo.tabuleiro[linhaDoJogador + i][colunaDoJogador + j].abrirCelula();
+							pontuacao();
+						}
+					}
+				}
+			}
+		}
 	}
-
-	private void abrirCasas(int linha, int coluna) { // abre as casas escolhida escolhida pelo jogador e, se não houver
-														// vizinhas, abre em cascata
-		abrir(linha, coluna);
+	
+	private void prepararJogo(int minas, int linha, int coluna) {
+		pontos = 0;
+		emJogo.gerarTabuleiro(linha, coluna);
+		sortearMinas(minas, linha, coluna);
+		posicionarVizinhas(linha, coluna);
 	}
 
 	private void abertura() { // verificacao de abertura de celula
-		conferirGameOver();
-		if (getGameOver()) {
-			return;
-		} else {
-			abrirCasas(this.x, this.y);
-			pontuacao();
-		}
+		abrirCasas(this.x, this.y);
 	}
 
 	private void casaMarcada() { // mensagem para celula marcada
@@ -141,7 +147,7 @@ public class Jogo extends InteracaoComUsuario {
 	}
 
 	private void casa() { // verificacao do estado da celula para acao de casas
-		Celula casa = emJogo.tabuleiro[this.x][this.y];
+		casa = emJogo.tabuleiro[this.x][this.y];
 		if (casa.getFechada()) {
 			if (casa.getMarcada()) {
 				casaMarcada();
@@ -154,7 +160,7 @@ public class Jogo extends InteracaoComUsuario {
 	}
 
 	private void contadorDeBandeiras() { // adicao ou subtracao da quantidade de bandeiras
-		Celula casa = emJogo.tabuleiro[this.x][this.y];
+		casa = emJogo.tabuleiro[this.x][this.y];
 		if (casa.getMarcada()) {
 			bandeiras--;
 		} else {
@@ -163,19 +169,19 @@ public class Jogo extends InteracaoComUsuario {
 	}
 
 	private void plantarBandeira() { // marcacao de celula com bandeira
-		Celula casa = emJogo.tabuleiro[this.x][this.y];
+		casa = emJogo.tabuleiro[this.x][this.y];
 		casa.setMarcada(true);
 		contadorDeBandeiras();
 	}
 
 	private void removerBandeira() { // remocao de bandeira da celula
-		Celula casa = emJogo.tabuleiro[this.x][this.y];
+		casa = emJogo.tabuleiro[this.x][this.y];
 		casa.setMarcada(false);
 		contadorDeBandeiras();
 	}
 
 	private void bandeira() { // verificacao do estado da celula para acao de bandeiras
-		Celula casa = emJogo.tabuleiro[this.x][this.y];
+		casa = emJogo.tabuleiro[this.x][this.y];
 		if (casa.getFechada()) {
 			if (!casa.getMarcada()) {
 				plantarBandeira();
@@ -248,29 +254,21 @@ public class Jogo extends InteracaoComUsuario {
 		}
 	}
 
-	private void conferirGameOver() { // confere se foi encontrada uma mina
-		Celula casa = emJogo.tabuleiro[this.x][this.y];
-		if (casa.getMina()) {
-			setGameOver(true);
-		}
-	}
-
 	private void fimDeJogo() { // exibicao do fim de jogo
-		if (getGameOver()) {
-			for (int i = 0; i < linha; i++) {
-				for (int j = 0; j < coluna; j++) {
-					Celula casa = emJogo.tabuleiro[i][j];
-					casa.setFechada(false);
-					System.out.print(casa + "   ");
-				}
-				System.out.println();
+		for (int i = 0; i < linha; i++) {
+			for (int j = 0; j < coluna; j++) {
+				Celula casa = emJogo.tabuleiro[i][j];
+				casa.setFechada(false);
+				System.out.print(casa + "   ");
 			}
-			System.out.println("Havia uma mina, voce perdeu.");
-			System.out.println("Pontuacao total: " + pontos);
+			System.out.println();
 		}
+		System.out.println("Havia uma mina, voce perdeu.");
+		System.out.println("Pontuacao total: " + pontos);
 	}
 
 	private void jogar() { // execucao do jogo
+		setGameOver(false);
 		do {
 			emJogo.tabuleiroEmJogo(getGameOver(), linha, coluna);
 			exibirPontuacao();
@@ -283,14 +281,12 @@ public class Jogo extends InteracaoComUsuario {
 	}
 
 	public Jogo(String dificuldade) throws NullPointerException { // construtor que inicia o processamento jogo
-		setGameOver(false);
 		if(dificuldade.equals(null)) {
 			throw new NullPointerException();
 		}
 		dificuldades(dificuldade);
 		emJogo = new Tabuleiro(linha, coluna);
-		sortearMinas(minas, linha, coluna);
-		posicionarVizinhas(linha, coluna);
+		prepararJogo(minas, linha, coluna);
 		// telaDoJogo = new Interface();
 		jogar();
 	}
