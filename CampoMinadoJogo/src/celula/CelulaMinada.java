@@ -6,6 +6,12 @@ public class CelulaMinada extends Celula {
 		super();
 		setMina(false);
 	}
+	
+	public void abrirCelula() {
+		if(getVazia()) {
+			setFechada(false);
+		}
+	}
 
 	public int numeroDeMinasVizinhas() {
 		int n = 0;
@@ -13,9 +19,6 @@ public class CelulaMinada extends Celula {
 			if (vizinho.getMina()) {
 				n++;
 			}
-		}
-		if (n != 0) {
-			setVizinha(true);
 		}
 		return n;
 	}
@@ -27,11 +30,11 @@ public class CelulaMinada extends Celula {
 			}
 			return "[]";
 		} else if (getMina()) {
-			return "*";
+			return "X";
 		} else {
 			return "" + numeroDeMinasVizinhas();
+			}
 		}
-	}
 
 	public void adicionarVizinhas(Celula v) {
 		campo.add(v);
