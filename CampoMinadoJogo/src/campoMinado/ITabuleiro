@@ -2,8 +2,8 @@ package campoMinado;
 
 public interface ITabuleiro {
 	
-	public void iniciarMatrizDeCampos();
+	void gerarTabuleiro(int linha, int coluna);
 	
-	public void imprimirTabuleiro();
-	
+	void tabuleiroEmJogo(boolean gameOver, int linha, int coluna);
+
 }
