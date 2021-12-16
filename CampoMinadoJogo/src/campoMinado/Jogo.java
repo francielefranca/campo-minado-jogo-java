@@ -33,7 +33,7 @@ public class Jogo extends InteracaoComUsuario {
 	private boolean gameOver;
 	private boolean gameWin;
 
-	public void dificuldades(String dificuldade) {
+	public void dificuldades(String dificuldade) { //caracteristicas das dificuldades 
 		switch (dificuldade) {
 		case "1":
 			linha = 9;
@@ -88,7 +88,7 @@ public class Jogo extends InteracaoComUsuario {
 		}
 	}
 
-	private void posicionarVizinhas(int linha, int coluna) {
+	private void posicionarVizinhas(int linha, int coluna) { //posiciona as casas vizinhas a minas no tabuleiro
 		for (int i = 0; i < linha; i++) {
 			for (int j = 0; j < coluna; j++) {
 				casa = emJogo.tabuleiro[i][j];
@@ -120,7 +120,7 @@ public class Jogo extends InteracaoComUsuario {
 		}
 	}
 
-	private void abrirCasas(int linhaDoJogador, int colunaDoJogador) { // abre as casas escolhida escolhida pelo jogador e, se não houver vizinhas, abre em cascata
+	private void abrirCasas(int linhaDoJogador, int colunaDoJogador) { // abre as casas escolhida escolhida pelo jogador e, se não houver vizinhas, abre as adjacentes (infelizmente, não foi possível abrir todas as vazias vizinhas, resultando em StackOverflow
 		casa = emJogo.tabuleiro[linhaDoJogador][colunaDoJogador];
 		if(casa.getMina()) {
 			setGameOver(true);
@@ -141,7 +141,7 @@ public class Jogo extends InteracaoComUsuario {
 		}
 	}
 	
-	private void prepararJogo(int minas, int linha, int coluna) {
+	private void prepararJogo(int minas, int linha, int coluna) { //preparacao das caracteristicas do jogo atual
 		pontos = 0;
 		contador = 0;
 		emJogo.gerarTabuleiro(linha, coluna);
@@ -149,7 +149,7 @@ public class Jogo extends InteracaoComUsuario {
 		posicionarVizinhas(linha, coluna);
 	}
 
-	private void abertura() { // verificacao de abertura de celula
+	private void abertura() {
 		abrirCasas(this.x, this.y);
 	}
 
@@ -163,7 +163,7 @@ public class Jogo extends InteracaoComUsuario {
 		receberCoordenadas();
 	}
 
-	private void casa() { // verificacao do estado da celula para acao de casas
+	private void casa() { // verificacao do estado da celula na hora de efetuar acoes
 		casa = emJogo.tabuleiro[this.x][this.y];
 		if (casa.getFechada()) {
 			if (casa.getMarcada()) {
@@ -225,7 +225,7 @@ public class Jogo extends InteracaoComUsuario {
 		}
 	}
 
-	private void receberLinha() {
+	private void receberLinha() { //recebe linha para jogar
 		try {
 			super.setLinha(linha);
 		} catch (TamanhoInvalidoException tamanho) {
@@ -238,7 +238,7 @@ public class Jogo extends InteracaoComUsuario {
 		this.x = (-(super.getLinha() - (linha - 1)));
 	}
 
-	private void receberColuna() {
+	private void receberColuna() { //recebe coluna para jogar
 		try {
 			super.setColuna(coluna);
 		} catch (TamanhoInvalidoException tamanho) {
@@ -272,7 +272,7 @@ public class Jogo extends InteracaoComUsuario {
 		}
 	}
 	
-	public void conferirVitoria(int numeroDeMinas, int linha, int coluna){
+	public void conferirVitoria(int numeroDeMinas, int linha, int coluna){ //confere se o jogador marcou todas as minas para vencer
 		if(emJogo.tabuleiro[linha][coluna].getMina()) {
 			if(emJogo.tabuleiro[linha][coluna].getMarcada()) {
 				contador++;
@@ -283,13 +283,13 @@ public class Jogo extends InteracaoComUsuario {
         	}           
     }
 	
-	private void vitoria(String dificuldade, String nomeDoJogador) {
+	private void vitoria(String dificuldade, String nomeDoJogador) { //vitoria do jogo
 		System.out.println("Voce limpou o tabuleiro, parabens!!!");
 		System.out.println("Pontuacao total: " + pontos);
 		ranking.salvarRanking(true, dificuldade, Duration.between(comecoDoTempo, Instant.now()), nomeDoJogador);
 	}
 
-	private void fimDeJogo(String dificuldade, String nomeDoJogador) { // exibicao do fim de jogo
+	private void fimDeJogo(String dificuldade, String nomeDoJogador) { // exibicao de derrota do jogo
 		for (int i = 0; i < linha; i++) {
 			for (int j = 0; j < coluna; j++) {
 				Celula casa = emJogo.tabuleiro[i][j];
@@ -303,7 +303,7 @@ public class Jogo extends InteracaoComUsuario {
 		ranking.salvarRanking(false, dificuldade, Duration.between(comecoDoTempo, Instant.now()), nomeDoJogador);
 	}
 
-	private void jogar(String dificuldade, String nomeDoJogador) { // execucao do jogo
+	private void jogar(String dificuldade, String nomeDoJogador) { // jogando
 		setGameOver(false);
 		setGameWin(false);
 		comecoDoTempo = Instant.now();
