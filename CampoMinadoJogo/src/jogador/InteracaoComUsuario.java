@@ -10,10 +10,10 @@ public class InteracaoComUsuario {
 
 	private int linhaDeEntrada;
 	private int colunaDeEntrada;
-	private String nomeDoJogador;
-	private char opcao;
-	private char acaoNoJogo;
-	private String dificuldadeDoJogo;
+	protected String nomeDoJogador;
+	private String opcao;
+	private String acaoNoJogo;
+	protected String dificuldadeDoJogo;
 
 	private Scanner inputLinha;
 	private Scanner inputColuna;
@@ -62,15 +62,17 @@ public class InteracaoComUsuario {
 
 	protected void setOpcao() throws OpcaoInvalidaException { // modificacao na opcao do menu
 		inputOpcao = new Scanner(System.in);
-		System.out.print("\nO que voce deseja acessar?\n" + "1 - Iniciar jogo\n" + "2 - Regras do jogo\n"
-				+ "3 - Niveis de dificuldade\n");
-		this.opcao = inputOpcao.next().charAt(0);
-		if (this.opcao != '1' && this.opcao != '2' && this.opcao != '3') {
-			throw new OpcaoInvalidaException("Opcao invalida.");
+		this.opcao = inputOpcao.next();
+		if (!this.opcao.equals("1")) {
+			if (!this.opcao.equals("2")) {
+				if (!this.opcao.equals("3")) {
+					throw new OpcaoInvalidaException("Opcao invalida.");
+				}
+			}
 		}
 	}
 
-	protected char getOpcao() {
+	protected String getOpcao() {
 		return this.opcao;
 	}
 
@@ -78,21 +80,20 @@ public class InteracaoComUsuario {
 															// das acoes eh valido
 		inputAcao = new Scanner(System.in);
 		System.out.println("Voce quer:\nAbrir casa (A)\nPlantar uma bandeira (B)");
-		this.acaoNoJogo = inputAcao.next().charAt(0);
-		if (this.acaoNoJogo != 'a' && this.acaoNoJogo != 'A') {
-			if (this.acaoNoJogo != 'b' && this.acaoNoJogo != 'B') {
+		this.acaoNoJogo = inputAcao.next();
+		if (!this.acaoNoJogo.equalsIgnoreCase("a")) {
+			if (!this.acaoNoJogo.equalsIgnoreCase("b")) {
 				throw new AcaoInvalidaException("Acao invalida.");
 			}
 		}
 	}
 
-	protected char getAcao() {
+	protected String getAcao() {
 		return this.acaoNoJogo;
 	}
 
 	protected void setDificuldade() throws OpcaoInvalidaException {
 		inputDificuldade = new Scanner(System.in);
-		System.out.println("1 - Facil\n" + "2 - Medio\n" + "3 - Dificil");
 		this.dificuldadeDoJogo = inputDificuldade.next();
 		if (!this.dificuldadeDoJogo.equals("1")) {
 			if (!this.dificuldadeDoJogo.equals("2")) {

@@ -15,6 +15,11 @@ public abstract class Celula {
 		this.setFechada(true);
 		this.campo = new ArrayList<>();
 	}
+	public void abrirCelula() {
+		if(getVazia()) {
+			setFechada(false);
+		}
+	}
 	
 	public void setFechada(boolean fechada) {
 		this.fechada = fechada;
@@ -40,7 +45,7 @@ public abstract class Celula {
 		return this.marcada;
 	}
 	
-	protected void setMina(boolean mina) {
+	public void setMina(boolean mina) {
 		this.mina = mina;
 	}
 	
@@ -48,14 +53,12 @@ public abstract class Celula {
 		return this.mina;
 	}
 	
-	public abstract void abrirCelula();
-	
 	public abstract int numeroDeMinasVizinhas();
-	
+
 	public abstract String toString();
-	
+
 	public abstract void adicionarVizinhas(Celula v);
-	
+
 	public abstract boolean minar();
 	
 }

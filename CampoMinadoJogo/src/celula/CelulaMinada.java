@@ -7,12 +7,6 @@ public class CelulaMinada extends Celula {
 		setMina(false);
 	}
 	
-	public void abrirCelula() {
-		if(getVazia()) {
-			setFechada(false);
-		}
-	}
-
 	public int numeroDeMinasVizinhas() {
 		int n = 0;
 		for (Celula vizinho : campo) {
@@ -44,10 +38,11 @@ public class CelulaMinada extends Celula {
 		if (!getMina()) {
 			setMina(true);
 			setVazia(false);
+			setMarcada(false);
 			return true;
 		} else {
 			return false;
 		}
 	}
-
+	
 }

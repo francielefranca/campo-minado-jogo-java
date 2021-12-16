@@ -7,19 +7,31 @@ import celula.Celula;
 import java.util.InputMismatchException;
 import excecoes.TamanhoInvalidoException;
 import excecoes.AcaoInvalidaException;
+
+import java.time.Duration;
+import java.time.Instant;
+
 import jogador.InteracaoComUsuario;
+import jogador.Ranking;
 
 public class Jogo extends InteracaoComUsuario {
 
 	private Random sort;
-	// private Interface telaDoJogo;
 	private Tabuleiro emJogo;
 	private Celula casa;
+	private Instant comecoDoTempo;
+	private Ranking ranking;
 
-	public int linha;
-	public int coluna;
-	public int minas;
-	public int bandeiras;
+	private int linha;
+	private int coluna;
+	private int minas;
+	private int bandeiras;
+	
+	private int x, y;
+	private int pontos;
+	private int contador;
+	private boolean gameOver;
+	private boolean gameWin;
 
 	public void dificuldades(String dificuldade) {
 		switch (dificuldade) {
@@ -44,16 +56,20 @@ public class Jogo extends InteracaoComUsuario {
 			}
 		}
 
-	private int x, y;
-	private int pontos;
-	private boolean gameOver;
-
 	private void setGameOver(boolean gameOver) {
 		this.gameOver = gameOver;
 	}
 
 	protected boolean getGameOver() {
 		return this.gameOver;
+	}
+	
+	private void setGameWin(boolean gameWin) {
+		this.gameWin = gameWin;
+	}
+	
+	protected boolean getGameWin() {
+		return this.gameWin;
 	}
 
 	private void pontuacao() { // pontuacao do jogo
@@ -104,7 +120,7 @@ public class Jogo extends InteracaoComUsuario {
 		}
 	}
 
-	private void abrirCasas(int linhaDoJogador, int colunaDoJogador) { // abre as casas escolhida escolhida pelo jogador e, se n√£o houver vizinhas, abre em cascata
+	private void abrirCasas(int linhaDoJogador, int colunaDoJogador) { // abre as casas escolhida escolhida pelo jogador e, se n„o houver vizinhas, abre em cascata
 		casa = emJogo.tabuleiro[linhaDoJogador][colunaDoJogador];
 		if(casa.getMina()) {
 			setGameOver(true);
@@ -127,6 +143,7 @@ public class Jogo extends InteracaoComUsuario {
 	
 	private void prepararJogo(int minas, int linha, int coluna) {
 		pontos = 0;
+		contador = 0;
 		emJogo.gerarTabuleiro(linha, coluna);
 		sortearMinas(minas, linha, coluna);
 		posicionarVizinhas(linha, coluna);
@@ -185,6 +202,7 @@ public class Jogo extends InteracaoComUsuario {
 		if (casa.getFechada()) {
 			if (!casa.getMarcada()) {
 				plantarBandeira();
+				conferirVitoria(minas, this.x, this.y);
 			} else {
 				removerBandeira();
 			}
@@ -200,7 +218,7 @@ public class Jogo extends InteracaoComUsuario {
 			System.out.println(acao.getMessage());
 			acoes();
 		}
-		if (super.getAcao() == 'a' || super.getAcao() == 'A') {
+		if (super.getAcao().equalsIgnoreCase("a")) {
 			casa();
 		} else {
 			bandeira();
@@ -253,8 +271,25 @@ public class Jogo extends InteracaoComUsuario {
 			}
 		}
 	}
+	
+	public void conferirVitoria(int numeroDeMinas, int linha, int coluna){
+		if(emJogo.tabuleiro[linha][coluna].getMina()) {
+			if(emJogo.tabuleiro[linha][coluna].getMarcada()) {
+				contador++;
+				}
+			}
+        if(contador == numeroDeMinas) {
+        	setGameWin(true);
+        	}           
+    }
+	
+	private void vitoria(String dificuldade, String nomeDoJogador) {
+		System.out.println("Voce limpou o tabuleiro, parabens!!!");
+		System.out.println("Pontuacao total: " + pontos);
+		ranking.salvarRanking(true, dificuldade, Duration.between(comecoDoTempo, Instant.now()), nomeDoJogador);
+	}
 
-	private void fimDeJogo() { // exibicao do fim de jogo
+	private void fimDeJogo(String dificuldade, String nomeDoJogador) { // exibicao do fim de jogo
 		for (int i = 0; i < linha; i++) {
 			for (int j = 0; j < coluna; j++) {
 				Celula casa = emJogo.tabuleiro[i][j];
@@ -265,29 +300,57 @@ public class Jogo extends InteracaoComUsuario {
 		}
 		System.out.println("Havia uma mina, voce perdeu.");
 		System.out.println("Pontuacao total: " + pontos);
+		ranking.salvarRanking(false, dificuldade, Duration.between(comecoDoTempo, Instant.now()), nomeDoJogador);
 	}
+	/*
+	if(getGameOver()) {
+		System.out.println("\n PERDEU :(");
+		ranking.salvarRanking(false, nivelDificuldade, Duration.between(start, Instant.now()));
+		exibirPontuacao();
+		imprimirMenuFinal();
+		
+		break;
+	}else {
+		if(jogadorGanhou()) {
+			interacaoJogador.nomeJogador();
+			System.out.println("\n GANHOU  ");
+			ranking.salvarRanking(true, nivelDificuldade, Duration.between(start, Instant.now()));
+			exibirPontuacao(); //funciona mesmo se ganhar?
+			imprimirMenuFinal();
 
-	private void jogar() { // execucao do jogo
+			break;
+		}
+	}
+	imprimirTabuleiro(linha, coluna);
+	 */
+
+	private void jogar(String dificuldade, String nomeDoJogador) { // execucao do jogo
 		setGameOver(false);
+		setGameWin(false);
+		comecoDoTempo = Instant.now();
 		do {
 			emJogo.tabuleiroEmJogo(getGameOver(), linha, coluna);
 			exibirPontuacao();
 			exibirBandeiras();
 			receberCoordenadas();
 			if (getGameOver()) {
-				fimDeJogo();
+				fimDeJogo(dificuldade, nomeDoJogador);
 			}
-		} while (!getGameOver());
+			if(getGameWin()) {
+				vitoria(dificuldade, nomeDoJogador);
+			}
+		} while (!getGameOver() && !getGameWin());
 	}
 
-	public Jogo(String dificuldade) throws NullPointerException { // construtor que inicia o processamento jogo
+	public Jogo(String dificuldade, String nomeDoJogador) throws NullPointerException { // construtor que inicia o processamento jogo
 		if(dificuldade.equals(null)) {
 			throw new NullPointerException();
 		}
 		dificuldades(dificuldade);
 		emJogo = new Tabuleiro(linha, coluna);
 		prepararJogo(minas, linha, coluna);
-		// telaDoJogo = new Interface();
-		jogar();
+		ranking = new Ranking();
+		jogar(dificuldade, nomeDoJogador);
 	}
+	
 }
