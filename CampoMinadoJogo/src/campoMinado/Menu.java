@@ -6,9 +6,8 @@ import jogador.InteracaoComUsuario;
 public class Menu extends InteracaoComUsuario {
 
 	Jogo iniciar;
-	Jogo iniciarComSave;
 
-	public Menu() throws OpcaoInvalidaException {
+	public Menu() throws OpcaoInvalidaException { //menu ao iniciar
 		System.out.println("CAMPO MINADO\n");
 		super.setNome();
 		opcoesDoMenu();
@@ -45,7 +44,7 @@ public class Menu extends InteracaoComUsuario {
 		opcoesDoMenu();
 	}
 
-	private void seletorDeDificuldades() throws OpcaoInvalidaException {
+	private void seletorDeDificuldades() throws OpcaoInvalidaException { //selecao de dificuldades do jogo
 		System.out.println("1 - Facil\n" + "2 - Medio\n" + "3 - Dificil");
 		try {
 			super.setDificuldade();
