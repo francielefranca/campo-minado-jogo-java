@@ -22,7 +22,7 @@ public class InteracaoComUsuario {
 	private Scanner inputAcao;
 	private Scanner inputDificuldade;
 
-	protected void setLinha(int linha) throws TamanhoInvalidoException { // modificacao na linha de acordo com
+	protected void setLinha(int linha) throws TamanhoInvalidoException { //entrada da linha que o jogador quer abrir
 																			// o que foi recebido do jogador
 		inputLinha = new Scanner(System.in);
 		System.out.print("Insira sua linha: ");
@@ -36,7 +36,7 @@ public class InteracaoComUsuario {
 		return this.linhaDeEntrada - 1;
 	}
 
-	protected void setColuna(int coluna) throws TamanhoInvalidoException { // modificacao na coluna de acordo com
+	protected void setColuna(int coluna) throws TamanhoInvalidoException { //entrada da coluna que o jogador quer abrir
 																			// o que foi recebido do jogador
 		inputColuna = new Scanner(System.in);
 		System.out.print("Insira sua coluna: ");
@@ -50,7 +50,7 @@ public class InteracaoComUsuario {
 		return this.colunaDeEntrada - 1;
 	}
 
-	protected void setNome() { // modificacao no nome do jogador
+	protected void setNome() { //entrada do nome do jogador
 		inputNome = new Scanner(System.in);
 		System.out.print("Digite o seu nome: ");
 		this.nomeDoJogador = inputNome.next();
@@ -60,7 +60,7 @@ public class InteracaoComUsuario {
 		return this.nomeDoJogador;
 	}
 
-	protected void setOpcao() throws OpcaoInvalidaException { // modificacao na opcao do menu
+	protected void setOpcao() throws OpcaoInvalidaException { //entrada da opcao do menu
 		inputOpcao = new Scanner(System.in);
 		this.opcao = inputOpcao.next();
 		if (!this.opcao.equals("1")) {
@@ -76,8 +76,7 @@ public class InteracaoComUsuario {
 		return this.opcao;
 	}
 
-	protected void setAcao() throws AcaoInvalidaException { // verificacao se o que foi digitado pelo jogador na escolha
-															// das acoes eh valido
+	protected void setAcao() throws AcaoInvalidaException { //verificacao se o que foi digitado pelo jogador na escolha das acoes eh valido
 		inputAcao = new Scanner(System.in);
 		System.out.println("Voce quer:\nAbrir casa (A)\nPlantar uma bandeira (B)");
 		this.acaoNoJogo = inputAcao.next();
@@ -92,7 +91,7 @@ public class InteracaoComUsuario {
 		return this.acaoNoJogo;
 	}
 
-	protected void setDificuldade() throws OpcaoInvalidaException {
+	protected void setDificuldade() throws OpcaoInvalidaException { //entrada do nivel de dificuldade do jogo pelo jogador
 		inputDificuldade = new Scanner(System.in);
 		this.dificuldadeDoJogo = inputDificuldade.next();
 		if (!this.dificuldadeDoJogo.equals("1")) {
