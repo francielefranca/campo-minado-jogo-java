@@ -53,12 +53,12 @@ public abstract class Celula {
 		return this.mina;
 	}
 	
-	public abstract int numeroDeMinasVizinhas();
+	public abstract int numeroDeMinasVizinhas(); //conta as minas vizinhas a celula
 
-	public abstract String toString();
+	public abstract String toString(); //converte para imprimir
 
-	public abstract void adicionarVizinhas(Celula v);
+	public abstract void adicionarVizinhas(Celula v); //adiciona as casas vizinhas
 
-	public abstract boolean minar();
+	public abstract boolean minar(); //mina a celula vazia
 	
 }
