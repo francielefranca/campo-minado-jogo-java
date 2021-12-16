@@ -120,7 +120,7 @@ public class Jogo extends InteracaoComUsuario {
 		}
 	}
 
-	private void abrirCasas(int linhaDoJogador, int colunaDoJogador) { // abre as casas escolhida escolhida pelo jogador e, se n„o houver vizinhas, abre em cascata
+	private void abrirCasas(int linhaDoJogador, int colunaDoJogador) { // abre as casas escolhida escolhida pelo jogador e, se n√£o houver vizinhas, abre em cascata
 		casa = emJogo.tabuleiro[linhaDoJogador][colunaDoJogador];
 		if(casa.getMina()) {
 			setGameOver(true);
@@ -302,27 +302,6 @@ public class Jogo extends InteracaoComUsuario {
 		System.out.println("Pontuacao total: " + pontos);
 		ranking.salvarRanking(false, dificuldade, Duration.between(comecoDoTempo, Instant.now()), nomeDoJogador);
 	}
-	/*
-	if(getGameOver()) {
-		System.out.println("\n PERDEU :(");
-		ranking.salvarRanking(false, nivelDificuldade, Duration.between(start, Instant.now()));
-		exibirPontuacao();
-		imprimirMenuFinal();
-		
-		break;
-	}else {
-		if(jogadorGanhou()) {
-			interacaoJogador.nomeJogador();
-			System.out.println("\n GANHOU  ");
-			ranking.salvarRanking(true, nivelDificuldade, Duration.between(start, Instant.now()));
-			exibirPontuacao(); //funciona mesmo se ganhar?
-			imprimirMenuFinal();
-
-			break;
-		}
-	}
-	imprimirTabuleiro(linha, coluna);
-	 */
 
 	private void jogar(String dificuldade, String nomeDoJogador) { // execucao do jogo
 		setGameOver(false);
